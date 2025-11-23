@@ -1,0 +1,24 @@
+{
+  "name": "texas-tough-rentals",
+  "version": "1.0.0",
+  "description": "Static small business website that rents out trailers",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "rental",
+    "trailer",
+    "static-site"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  }
+}

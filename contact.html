@@ -4,83 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | Texas Tough Rentals</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 </head>
-<body>
+<body class="bg-faded-cream">
 
     <header>
-        <div class="container nav-bar">
-            <a href="index.html" class="logo">
-                <img src="images/logo.png" alt="Texas Tough Rentals logo" style="height:40px; vertical-align:middle; margin-right:8px;">
-                Texas<span>Tough</span>
+        <div class="nav-bar fixed top-0 w-full bg-charcoal shadow-lg z-50 border-b-[3px] border-rustic-red flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
+            <a href="/" class="nav-logo">
+                <img src="images/logo.png" alt="Texas Tough Rentals logo" class="h-16">
             </a>
-            <span class="material-symbols-outlined mobile-toggle" id="mobile-menu-btn">menu</span>
-            <nav class="nav-links" id="nav-links">
-                <a href="index.html">Home</a>
-                <a href="inquiry.html">Hotshot / Freight</a>
-                <a href="trailers.html">Trailer Rental</a>
-                <a href="contact.html" class="active">Contact</a>
+            <nav id="nav-menu">
+                <ul class="hidden lg:flex space-x-8 text-faded-cream font-body font-semibold uppercase text-sm items-center">
+                    <li><a href="index.html" class="hover:text-construction-yellow transition-colors">Home</a></li>
+                    <li><a href="trailer.html" class="hover:text-construction-yellow transition-colors">Trailer</a></li>
+                    <li><a href="inquiry.html" class="hover:text-construction-yellow transition-colors">Quote</a></li>
+                    <li><a href="contact.html" class="text-construction-yellow transition-colors">Contact</a></li>
+                </ul>
             </nav>
+            <!-- Mobile Trigger -->
+            <span id="mobile-menu" class="material-symbols-outlined lg:hidden text-faded-cream text-2xl focus:outline-none cursor-pointer">menu</span>
+            <!-- Mobile Menu -->
+            <div id="mobile-nav" class="hidden lg:hidden absolute top-full left-0 w-full bg-charcoal shadow-lg">
+                <a href="index.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Home</a>
+                <a href="trailer.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Trailer</a>
+                <a href="inquiry.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Quote</a>
+                <a href="contact.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors active">Contact</a>
+            </div>
         </div>
     </header>
 
-    <section class="section">
-        <div class="container" style="text-align: center;">
-            <h1 class="section-title">Contact Us</h1>
-            <p class="section-subtitle">Reach out for bookings, quotes, or questions.</p>
+    <main class="pt-28">
+        <section class="section">
+            <div class="container text-center">
+                <h1 class="section-title">Contact Us</h1>
+                <p class="section-subtitle">Reach out for bookings, quotes, or questions.</p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
-                <!-- Phone -->
-                <div class="review-card">
-                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary);">call</span>
-                    <h3>Phone</h3>
-                    <p><a href="tel:+16822334986">+1 682-233-4986</a></p>
-                </div>
-                
-                <!-- Email -->
-                <div class="review-card">
-                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary);">mail</span>
-                    <h3>Email</h3>
-                    <p><a href="mailto:texastoughrentals@gmail.com">texastoughrentals@gmail.com</a></p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <!-- Phone -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                        <span class="material-symbols-outlined text-5xl text-rustic-red mb-4">call</span>
+                        <h3 class="text-2xl font-bold mb-2">Phone</h3>
+                        <a href="tel:+16822334986" class="text-lg text-charcoal hover:text-rustic-red transition-colors">+1 682-233-4986</a>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                        <span class="material-symbols-outlined text-5xl text-rustic-red mb-4">mail</span>
+                        <h3 class="text-2xl font-bold mb-2">Email</h3>
+                        <a href="mailto:texastoughrentals@gmail.com" class="text-lg text-charcoal hover:text-rustic-red transition-colors">texastoughrentals@gmail.com</a>
+                    </div>
+
+                    <!-- Social -->
+                    <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                        <span class="material-symbols-outlined text-5xl text-rustic-red mb-4">groups</span>
+                        <h3 class="text-2xl font-bold mb-2">Facebook</h3>
+                        <a href="https://www.facebook.com/texastoughrentals" target="_blank" class="text-lg text-charcoal hover:text-rustic-red transition-colors">@texastoughrentals</a>
+                    </div>
                 </div>
 
-                <!-- Social -->
-                <div class="review-card">
-                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--primary);">thumb_up</span>
-                    <h3>Facebook</h3>
-                    <p><a href="https://www.facebook.com/texastoughrentals" target="_blank">@texastoughrentals</a></p>
+                <!-- Map -->
+                <div class="mt-20 rounded-lg overflow-hidden shadow-lg">
+                    <iframe 
+                        width="100%" 
+                        height="450" 
+                        style="border:0;"
+                        loading="lazy"
+                        allowfullscreen
+                        src="https://maps.google.com/maps?q=Keller%2C%20TX%2076244%2C%20United%20States&t=&z=13&ie=UTF8&iwloc=&output=embed">
+                    </iframe>
                 </div>
             </div>
+        </section>
+    </main>
 
-            <!-- Map Placeholder -->
-            <div style="margin-top: 4rem;">
-                <iframe 
-                    width="100%" 
-                    height="450" 
-                    frameborder="0" 
-                    scrolling="no" 
-                    marginheight="0" 
-                    marginwidth="0" 
-                    src="https://maps.google.com/maps?q=Keller%2C%20TX%2076244%2C%20United%20States&t=&z=13&ie=UTF8&iwloc=&output=embed">
-                </iframe>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container footer-info">
-            <div class="logo" style="margin-bottom: 1rem;">
-                <img src="images/logo.png" alt="Texas Tough Rentals logo" style="height:36px; vertical-align:middle; margin-right:8px;">
-                Texas<span>Tough</span>
-            </div>
-            <p>Keller, TX 76244, United States</p>
-            <p><a href="tel:+16822334986">+1 682-233-4986</a></p>
-            <p><a href="mailto:texastoughrentals@gmail.com">texastoughrentals@gmail.com</a></p>
-            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">&copy; 2025 Texas Tough Rentals. All rights reserved.</p>
+    <footer class="bg-charcoal border-t-[3px] border-rustic-red py-8">
+        <div class="container mx-auto text-center text-faded-cream">
+            <img src="images/logo.png" alt="Texas Tough Rentals logo" class="h-16 mx-auto mb-4">
+            <p>&copy; 2025 Texas Tough Rentals. All Rights Reserved.</p>
         </div>
     </footer>
-    <script src="js/app.js"></script>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileNav.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileNav.classList.add('hidden');
+          });
+        });
+    </script>
 </body>
 </html>

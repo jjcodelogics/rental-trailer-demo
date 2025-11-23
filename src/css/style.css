@@ -18,5 +18,70 @@
   }
 }
 
+@layer components {
+  .btn {
+    @apply inline-block px-8 py-3 rounded-md text-lg font-semibold uppercase tracking-wide transition-colors duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-rustic-red text-faded-cream hover:bg-opacity-90;
+  }
+
+  .btn-secondary {
+    @apply bg-construction-yellow text-charcoal hover:bg-opacity-90;
+  }
+
+  .section {
+    @apply py-16 sm:py-20;
+  }
+
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-bold text-center mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-lg md:text-xl text-center text-charcoal/80 mb-12;
+  }
+
+  .rental-form {
+    @apply max-w-2xl mx-auto;
+  }
+
+  .form-group {
+    @apply mb-6;
+  }
+
+  .rental-form label {
+    @apply flex items-center text-lg font-semibold mb-2 text-charcoal;
+  }
+
+  .rental-form label .material-symbols-outlined {
+    @apply mr-2 text-rustic-red;
+  }
+
+  .rental-form input[type="text"],
+  .rental-form input[type="email"],
+  .rental-form input[type="date"],
+  .rental-form select {
+    @apply w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow;
+  }
+
+  .date-picker {
+    @apply flex flex-col sm:flex-row sm:space-x-4;
+  }
+
+  .date-picker .date {
+    @apply flex-1 mb-6 sm:mb-0;
+  }
+
+  .rental-form .disclaimer {
+    @apply text-sm text-charcoal/60 mt-4 block;
+  }
+}
+
 
 

@@ -1,125 +1,158 @@
-import { inquirySchema } from "./schemas.js";
+import { inquirySchema, validateFormData } from './schemas.js';
 
-// Support both the newer inquiry form and older quote-form (backwards compatible)
-const form = document.getElementById("inquiryForm") || document.getElementById("quote-form");
-const successMsg = document.getElementById("successMessage") || document.getElementById("success-msg");
+export function handleInquiryForm() {
+  const form = document.getElementById('inquiryForm');
+  if (!form) return;
 
-if (form) {
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        
-        // 1. Reset UI (Clear previous errors and styling)
-        document.querySelectorAll(".form-error, .error-msg").forEach(el => {
-            el.style.display = "none";
-            el.classList.remove('show');
-            el.innerText = "";
-        });
-        document.querySelectorAll("input, textarea, select").forEach(el => el.classList.remove("input-error"));
-        document.querySelectorAll(".form-group").forEach(g => g.classList.remove('error'));
+  const successMessage = document.getElementById('successMessage');
 
-        // 2. Capture Raw Data
-        const formData = new FormData(form);
-        const rawData = Object.fromEntries(formData.entries());
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        // 3. Validate & Sanitize using Zod (inquirySchema)
-        const result = inquirySchema.safeParse(rawData);
-
-        if (!result.success) {
-            // --- FAILURE: Show Errors ---
-            const errors = result.error.format();
-
-            Object.keys(errors).forEach((key) => {
-                if (key !== "_errors") {
-                    // Support old error element naming (error-<field>) and new (<field>Error)
-                    const errorElement = document.getElementById(`${key}Error`) || document.getElementById(`error-${key}`);
-                    const inputElement = document.getElementById(key) || form.querySelector(`[name="${key}"]`);
-                    const message = errors[key]._errors && errors[key]._errors[0] ? errors[key]._errors[0] : (errors[key]._errors || []).join(', ');
-
-                    // Display the error message
-                    if (errorElement) {
-                        errorElement.innerText = message || 'Invalid input';
-                        errorElement.style.display = "block";
-                        errorElement.classList.add('show');
-                    }
-                    // Add error class to the input field and form-group
-                    if (inputElement) {
-                        inputElement.classList.add("input-error");
-                        inputElement.closest('.form-group')?.classList.add('error');
-                    }
-                }
-            });
-
-            // Scroll to first error
-            const firstError = form.querySelector('.form-group.error');
-            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-            // --- SUCCESS: Submit Sanitized Data (send to API) ---
-            console.log("Form is valid. Sanitized Data:", result.data);
-
-            const btn = form.querySelector("button[type=submit]") || form.querySelector("button");
-            const originalText = btn ? btn.innerText : null;
-            if (btn) {
-                btn.innerText = "Sending...";
-                btn.disabled = true;
-            }
-
-            try {
-                const resp = await fetch('/api/submit-quote', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(result.data)
-                });
-
-                const payload = await resp.json().catch(() => ({}));
-
-                if (resp.ok && payload && payload.success) {
-                    // show success text requested by user
-                    if (successMsg) {
-                        successMsg.textContent = 'inquiery send!';
-                        successMsg.classList.add('show');
-                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } else {
-                        alert('inquiery send!');
-                    }
-
-                    form.reset();
-                } else {
-                    // handle validation errors returned from server
-                    if (payload && payload.errors && typeof payload.errors === 'object') {
-                        Object.keys(payload.errors).forEach(fieldName => {
-                            const errEl = document.getElementById(`${fieldName}Error`);
-                            const inputEl = document.getElementById(fieldName) || form.querySelector(`[name="${fieldName}"]`);
-                            if (errEl) {
-                                errEl.textContent = payload.errors[fieldName];
-                                errEl.classList.add('show');
-                                errEl.style.display = 'block';
-                            }
-                            if (inputEl) {
-                                inputEl.classList.add('input-error');
-                                inputEl.closest('.form-group')?.classList.add('error');
-                            }
-                        });
-
-                        const firstError = form.querySelector('.form-group.error');
-                        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } else {
-                        alert('Submission failed. Please try again later.');
-                    }
-                }
-            } catch (err) {
-                console.error('Network error sending inquiry:', err);
-                alert('Network error. Please try again later.');
-            } finally {
-                if (btn && originalText !== null) {
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                }
-
-                // Auto-hide success message if present
-                if (successMsg) {
-                    setTimeout(() => { successMsg.classList.remove('show'); }, 5000);
-                }
-            }
-        }
+    // Clear previous errors
+    form.querySelectorAll('.form-error').forEach(error => {
+      error.textContent = '';
+      error.classList.remove('show');
     });
+    form.querySelectorAll('.form-group.error').forEach(group => {
+      group.classList.remove('error');
+    });
+    if (successMessage) successMessage.style.display = 'none';
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // Client-side validation
+    const result = validateFormData(inquirySchema, data);
+
+    if (result.success) {
+      try {
+        const response = await fetch('/api/submit-quote', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(result.data),
+        });
+
+        const responseData = await response.json();
+
+        if (response.ok && responseData.success) {
+          if (successMessage) {
+            successMessage.style.display = 'block';
+          }
+          form.reset();
+          // Reset date picker minimums
+          const now = new Date();
+          now.setSeconds(0, 0);
+          const minDateTime = toLocalDateTimeInputValue(now);
+          const pickupDateInput = document.getElementById('pickupDate');
+          const deliveryDateInput = document.getElementById('deliveryDate');
+          if(pickupDateInput) pickupDateInput.min = minDateTime;
+          if(deliveryDateInput) deliveryDateInput.min = minDateTime;
+
+        } else {
+          // Handle server-side validation errors
+          if (responseData.errors) {
+            Object.entries(responseData.errors).forEach(([field, message]) => {
+              const errorEl = document.getElementById(`${field}Error`);
+              const group = document.getElementById(field)?.closest('.form-group');
+              if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.classList.add('show');
+              }
+              if (group) {
+                group.classList.add('error');
+              }
+            });
+          } else {
+            alert('An unexpected error occurred on the server.');
+          }
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert('An error occurred while submitting the form.');
+      }
+    } else {
+      // Display Zod validation errors
+      Object.entries(result.errors).forEach(([field, message]) => {
+        const errorEl = document.getElementById(`${field}Error`);
+        const group = document.getElementById(field)?.closest('.form-group');
+        if (errorEl) {
+          errorEl.textContent = message;
+          errorEl.classList.add('show');
+        }
+        if (group) {
+          group.classList.add('error');
+        }
+      });
+    }
+  });
+
+  // --- Date Picker Logic ---
+  function toLocalDateTimeInputValue(d) {
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  const now = new Date();
+  now.setSeconds(0, 0);
+  const minDateTime = toLocalDateTimeInputValue(now);
+
+  const pickupDateInput = document.getElementById('pickupDate');
+  const deliveryDateInput = document.getElementById('deliveryDate');
+  if (pickupDateInput) pickupDateInput.min = minDateTime;
+  if (deliveryDateInput) deliveryDateInput.min = minDateTime;
+
+  function isDateTimeLocalFormat(v) {
+    return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(v);
+  }
+
+  function clearError(fieldName) {
+    const errEl = document.getElementById(`${fieldName}Error`);
+    const group = document.getElementById(fieldName)?.closest('.form-group');
+    if (errEl) {
+      errEl.textContent = '';
+      errEl.classList.remove('show');
+    }
+    if (group) {
+      group.classList.remove('error');
+    }
+  }
+
+  if (pickupDateInput) {
+    pickupDateInput.addEventListener('change', () => {
+      clearError('pickupDate');
+      if (!pickupDateInput.value || !isDateTimeLocalFormat(pickupDateInput.value)) return;
+
+      if (pickupDateInput.value < minDateTime) {
+        pickupDateInput.value = minDateTime;
+      }
+
+      if (deliveryDateInput) {
+        deliveryDateInput.min = pickupDateInput.value;
+        if (deliveryDateInput.value && deliveryDateInput.value < pickupDateInput.value) {
+          deliveryDateInput.value = pickupDateInput.value;
+        }
+      }
+    });
+  }
+
+  if (deliveryDateInput) {
+    deliveryDateInput.addEventListener('change', () => {
+      clearError('deliveryDate');
+      if (!deliveryDateInput.value || !isDateTimeLocalFormat(deliveryDateInput.value)) return;
+
+      if (deliveryDateInput.value < (pickupDateInput.value || minDateTime)) {
+        deliveryDateInput.value = pickupDateInput.value || minDateTime;
+      }
+    });
+  }
+
+  // Clear error on input
+  form.querySelectorAll('input, select, textarea').forEach(field => {
+    field.addEventListener('input', () => {
+      clearError(field.name);
+    });
+  });
 }

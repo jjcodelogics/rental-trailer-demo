@@ -8,7 +8,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
-        inquiry: path.resolve(__dirname, 'inquiry.html')
+        trailer: path.resolve(__dirname, 'trailer.html'),
+        contact: path.resolve(__dirname, 'contact.html')
       }
     }
   },

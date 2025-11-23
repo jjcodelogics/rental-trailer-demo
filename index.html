@@ -6,7 +6,6 @@
   <title>Texas Tough Rentals - Dump Trailer Rentals & Hauling</title>
   <meta name="description" content="Texas Tough Rentals - Built for the Tough Jobs! Dump trailer rentals, junk removal, and hauling services in Keller, TX.">
   <link rel="stylesheet" href="/src/css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Import Map for Zod -->
   <script type="importmap">
@@ -25,11 +24,11 @@
         <!-- Logo -->
         <div class="flex items-center space-x-3">
           <img src="images/logo.png" alt="Texas Tough Rentals logo" class="h-10 w-10">
-          <span class="text-faded-cream font-heading text-2xl font-bold uppercase">Texas Tough Rentals</span>
+          <span class="text-faded-cream font-heading text-xl md:text-2xl font-bold uppercase">Texas Tough Rentals</span>
         </div>
         
-        <!-- Navigation -->
-        <ul class="hidden md:flex space-x-8 text-faded-cream font-body font-semibold uppercase text-sm">
+        <!-- Desktop Navigation -->
+        <ul class="hidden lg:flex space-x-8 text-faded-cream font-body font-semibold uppercase text-sm">
           <li><a href="#home" class="hover:text-construction-yellow transition-colors">Home</a></li>
           <li><a href="#services" class="hover:text-construction-yellow transition-colors">Services</a></li>
           <li><a href="#trailers" class="hover:text-construction-yellow transition-colors">Trailers</a></li>
@@ -37,9 +36,27 @@
         </ul>
         
         <!-- Phone Number -->
-        <a href="tel:+16822334986" class="text-rustic-red font-heading text-xl md:text-2xl font-bold hover:text-construction-yellow transition-colors">
-          <i class="fas fa-phone-alt mr-2"></i>682-233-4986
-        </a>
+        <div class="flex items-center space-x-4">
+          <a href="tel:+16822334986" class="text-rustic-red font-heading text-lg md:text-2xl font-bold hover:text-construction-yellow transition-colors hidden sm:block">
+            📞 682-233-4986
+          </a>
+          
+          <!-- Mobile Menu Button -->
+          <button id="mobileMenuBtn" class="lg:hidden text-faded-cream text-2xl focus:outline-none">
+            ☰
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 border-t-2 border-rustic-red pt-4">
+        <ul class="space-y-3 text-faded-cream font-body font-semibold uppercase text-sm">
+          <li><a href="#home" class="block hover:text-construction-yellow transition-colors">Home</a></li>
+          <li><a href="#services" class="block hover:text-construction-yellow transition-colors">Services</a></li>
+          <li><a href="#trailers" class="block hover:text-construction-yellow transition-colors">Trailers</a></li>
+          <li><a href="#contact" class="block hover:text-construction-yellow transition-colors">Contact</a></li>
+          <li><a href="tel:+16822334986" class="block text-rustic-red hover:text-construction-yellow transition-colors">📞 Call: 682-233-4986</a></li>
+        </ul>
       </div>
     </nav>
   </header>
@@ -73,7 +90,7 @@
         <!-- Service 1: Dump Trailer Rentals -->
         <div class="bg-faded-cream border-4 border-charcoal p-8 hover:shadow-2xl transition-shadow">
           <div class="text-rustic-red text-6xl mb-6 text-center">
-            <i class="fas fa-trailer"></i>
+            🚛
           </div>
           <h3 class="text-charcoal font-heading text-2xl font-bold mb-4 text-center uppercase">
             Dump Trailer Rentals
@@ -100,7 +117,7 @@
         <!-- Service 2: Junk Removal / Hauling -->
         <div class="bg-faded-cream border-4 border-charcoal p-8 hover:shadow-2xl transition-shadow">
           <div class="text-rustic-red text-6xl mb-6 text-center">
-            <i class="fas fa-trash-alt"></i>
+            🗑️
           </div>
           <h3 class="text-charcoal font-heading text-2xl font-bold mb-4 text-center uppercase">
             Junk Removal / Hauling
@@ -127,7 +144,7 @@
         <!-- Service 3: Load/Haul Service -->
         <div class="bg-faded-cream border-4 border-charcoal p-8 hover:shadow-2xl transition-shadow">
           <div class="text-rustic-red text-6xl mb-6 text-center">
-            <i class="fas fa-truck-loading"></i>
+            📦
           </div>
           <h3 class="text-charcoal font-heading text-2xl font-bold mb-4 text-center uppercase">
             Load/Haul Service
@@ -232,7 +249,7 @@
       <div class="mt-12 text-center">
         <div class="inline-block bg-construction-yellow border-4 border-charcoal px-8 py-4">
           <p class="text-charcoal font-heading text-2xl font-bold uppercase">
-            <i class="fas fa-check-circle mr-2"></i>Trailers Available Now!
+            ✓ Trailers Available Now!
           </p>
         </div>
       </div>
@@ -368,11 +385,10 @@
           Or Call Us Directly
         </p>
         <a href="tel:+16822334986" class="text-rustic-red font-heading text-4xl font-bold hover:text-construction-yellow transition-colors">
-          <i class="fas fa-phone-alt mr-3"></i>682-233-4986
+          📞 682-233-4986
         </a>
         <p class="text-charcoal font-body text-lg mt-6">
-          <i class="fas fa-clock mr-2"></i>
-          <strong>Hours:</strong> Monday - Saturday: 7:00 AM - 6:00 PM
+          🕒 <strong>Hours:</strong> Monday - Saturday: 7:00 AM - 6:00 PM
         </p>
       </div>
     </div>
@@ -386,8 +402,7 @@
         <div>
           <h3 class="text-construction-yellow font-heading text-xl font-bold uppercase mb-4">Location</h3>
           <p class="text-faded-cream font-body">
-            <i class="fas fa-map-marker-alt mr-2"></i>
-            Keller, TX 76244<br>
+            📍 Keller, TX 76244<br>
             United States
           </p>
         </div>
@@ -396,12 +411,10 @@
         <div>
           <h3 class="text-construction-yellow font-heading text-xl font-bold uppercase mb-4">Contact</h3>
           <p class="text-faded-cream font-body mb-2">
-            <i class="fas fa-phone mr-2"></i>
-            <a href="tel:+16822334986" class="hover:text-construction-yellow transition-colors">+1 682-233-4986</a>
+            📞 <a href="tel:+16822334986" class="hover:text-construction-yellow transition-colors">+1 682-233-4986</a>
           </p>
           <p class="text-faded-cream font-body">
-            <i class="fas fa-envelope mr-2"></i>
-            <a href="mailto:texastoughrentals@gmail.com" class="hover:text-construction-yellow transition-colors">texastoughrentals@gmail.com</a>
+            ✉️ <a href="mailto:texastoughrentals@gmail.com" class="hover:text-construction-yellow transition-colors">texastoughrentals@gmail.com</a>
           </p>
         </div>
         
@@ -430,6 +443,22 @@
 
   <!-- Form Handler Script -->
   <script type="module">
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Close mobile menu when clicking a link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+    
+    // Form handling
     const form = document.getElementById('contactForm');
     
     form.addEventListener('submit', (e) => {

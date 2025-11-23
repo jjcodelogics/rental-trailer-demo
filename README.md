@@ -1,119 +1,98 @@
-# Texas Tough Rentals
+# Texas Tough Rentals - Small Business Website
 
-A static small business website for trailer rentals built with Vite, pure JavaScript, and CSS (no frameworks).
+![License](https://img.shields.io/badge/license-ISC-blue.svg)
+
+A portfolio project showcasing the development of a modern, responsive website for a fictional small business specializing in trailer rentals. This project demonstrates a full-stack approach, from a custom-designed user interface to a serverless backend for handling customer inquiries.
+
+**Live Demo:** [https://yoelvanhuizen.github.io/rental-trailer-demo/](https://yoelvanhuizen.github.io/rental-trailer-demo/)
+
+![Texas Tough Rentals Screenshot](images/car-with-trailer.jpg)
+
+## About The Project
+
+This project was built to simulate a real-world scenario where a small business needs a professional online presence. The goal was to create a fast, user-friendly, and visually appealing website that effectively communicates the company's services and allows potential customers to request a quote easily.
+
+This project highlights the following skills:
+- **Frontend Development:** Building a responsive and accessible user interface with modern web technologies.
+- **UI/UX Design:** Creating a custom theme and layout that is both aesthetically pleasing and intuitive.
+- **Backend Integration:** Implementing a serverless function to handle form submissions securely and efficiently.
+- **Tooling and Automation:** Utilizing a modern build tool (Vite) to streamline the development and deployment process.
+
+## Built With
+
+- **[Vite](https://vitejs.dev/):** A next-generation frontend tooling that provides a faster and leaner development experience.
+- **[Tailwind CSS](https://tailwindcss.com/):** A utility-first CSS framework for rapid UI development.
+- **[Zod](https://zod.dev/):** A TypeScript-first schema declaration and validation library used for ensuring the integrity of form data.
+- **HTML5 & CSS3:** For structuring the content and styling the website.
+- **JavaScript (ES6+):** For client-side interactivity and form handling.
+- **Serverless Functions:** For processing form submissions on the backend.
 
 ## Features
 
-- **Pure JS/CSS**: No frameworks, just vanilla JavaScript and CSS
-- **Vite Build System**: Fast development and optimized production builds
-- **Zod Validation**: Form validation and sanitization using Zod via Import Maps
-- **Responsive Design**: Mobile-friendly layout
-- **Multiple Pages**: Home page and inquiry form
+- **Responsive Design:** The website is fully responsive and optimized for a seamless experience on desktops, tablets, and mobile devices.
+- **Multi-Page Layout:** The site includes separate pages for the homepage, trailer details, and contact information, providing a clear and organized structure.
+- **Dynamic Quote Request Form:** A user-friendly form allows customers to request a rental quote. The form includes client-side validation using **Zod** to ensure data is accurate before submission.
+- **Serverless Backend:** The quote request form is powered by a serverless function (`api/submit-quote.js`) that processes the data, making the site scalable and secure without a traditional server.
+- **Custom Theming:** The project features a custom theme created with Tailwind CSS, including a unique color palette and typography to match the fictional brand's identity.
+
+## Getting Started
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+- **Node.js:** Make sure you have Node.js installed. You can download it from [nodejs.org](https://nodejs.org/).
+- **npm:** The Node.js package manager, which comes with the Node.js installation.
+
+### Installation
+
+1.  **Clone the repo:**
+    ```sh
+    git clone https://github.com/your_username/rental-trailer-demo.git
+    ```
+2.  **Navigate to the project directory:**
+    ```sh
+    cd rental-trailer-demo
+    ```
+3.  **Install NPM packages:**
+    ```sh
+    npm install
+    ```
+
+### Running the Application
+
+- **Development Mode:**
+  Run the following command to start the Vite development server. This will open the website in your default browser and automatically reload the page when you make changes.
+  ```sh
+  npm run dev
+  ```
+
+- **Production Build:**
+  To create a production-ready build of the website, run:
+  ```sh
+  npm run build
+  ```
+  This will generate a `dist` folder with the optimized and minified files.
 
 ## Project Structure
 
 ```
-rental-trailer-demo/
-├── index.html              # Main landing page
-├── inquiry.html            # Rental inquiry form page
-├── package.json            # NPM dependencies and scripts
-├── vite.config.js          # Vite configuration
+.
+├── api/
+│   └── submit-quote.js      # Serverless function for form submission
+├── images/                  # Project images and assets
 ├── src/
 │   ├── css/
-│   │   └── style.css      # Main stylesheet
+│   │   └── style.css        # Main stylesheet
 │   └── js/
-│       └── schemas.js     # Zod validation schemas
-└── public/                # Static assets (optional)
+│       ├── form-handler.js  # Client-side form logic
+│       └── schemas.js       # Zod schemas for validation
+├── *.html                   # HTML files for each page
+├── package.json             # Project dependencies and scripts
+├── tailwind.config.js       # Tailwind CSS configuration
+└── vite.config.js           # Vite configuration
 ```
 
-## Prerequisites
+## Contact
 
-- Node.js 18.x or higher
-- npm or yarn
-
-## Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/jjcodelogics/rental-trailer-demo.git
-cd rental-trailer-demo
-
-# Install dependencies
-npm install
-```
-
-## CLI Commands
-
-### Development Server
-Start the development server with hot module replacement:
-
-```bash
-npm run dev
-```
-
-The site will be available at `http://localhost:3000`
-
-### Production Build
-Build the project for production:
-
-```bash
-npm run build
-```
-
-Output will be in the `dist/` directory.
-
-### Preview Production Build
-Preview the production build locally:
-
-```bash
-npm run preview
-```
-
-## Import Maps
-
-This project uses [Import Maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) to load Zod directly from a CDN without bundling it. The import map is defined in both HTML files:
-
-```html
-<script type="importmap">
-  {
-    "imports": {
-      "zod": "https://cdn.jsdelivr.net/npm/zod@3.22.4/+esm"
-    }
-  }
-</script>
-```
-
-This allows ES modules to import Zod like this:
-
-```javascript
-import { z } from 'zod';
-```
-
-## Form Validation
-
-The inquiry form uses Zod for client-side validation and sanitization. The validation schema is defined in `src/js/schemas.js` and includes:
-
-- Name validation (2-100 characters)
-- Email validation and normalization
-- Phone number format validation
-- Trailer type selection
-- Rental date validation (must be today or future)
-- Duration validation (1-30 days)
-- Optional message field (max 500 characters)
-
-## Technologies Used
-
-- **Vite 5.x**: Build tool and development server
-- **Zod 3.22.x**: Schema validation library
-- **Pure JavaScript**: No frameworks or libraries (except Zod for validation)
-- **CSS3**: Modern CSS with CSS Grid and Flexbox
-- **Import Maps**: Native ES module imports
-
-## Browser Support
-
-- Modern browsers with ES2020+ support
-- Import Maps support (Chrome 89+, Firefox 108+, Safari 16.4+)
-
-## License
-
-This project is licensed under the ISC License - see the LICENSE file for details.
+Project Link: [https://github.com/yoelvanhuizen/rental-trailer-demo](https://github.com/yoelvanhuizen/rental-trailer-demo)

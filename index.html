@@ -31,17 +31,17 @@
             <span id="mobile-menu" class="material-symbols-outlined lg:hidden text-faded-cream text-2xl focus:outline-none cursor-pointer">menu</span>
             <!-- Mobile Menu -->
             <div id="mobile-nav" class="hidden lg:hidden absolute top-full left-0 w-full bg-charcoal shadow-lg">
-                <a href="index.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors active">Home</a>
-                <a href="trailer.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Trailer</a>
-                <a href="trailer.html#rental-form" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Quote</a>
-                <a href="contact.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Contact</a>
+                <a href="index.html" class="mobile-menu-link active">Home</a>
+                <a href="trailer.html" class="mobile-menu-link">Trailer</a>
+                <a href="trailer.html#rental-form" class="mobile-menu-link">Quote</a>
+                <a href="contact.html" class="mobile-menu-link">Contact</a>
             </div>
         </div>
     </header>
     <main>
-        <section id="announcement" class="bg-rustic-red text-faded-cream py-2 text-center">
+        <section id="announcement" class="bg-rustic-red text-faded-cream py-2 text-center shadow-md">
             <div class="container mx-auto">
-                <p>Built for the Tough Jobs!&nbsp;Give us a call at <a href="tel:+16822334986" class="text-rustic-red hover:text-construction-yellow transition-colors">+1 682-233-4986</a></p>
+                <p>Built for the Tough Jobs!&nbsp;Give us a call at <a href="tel:+16822334986" class="text-faded-cream font-bold hover:text-construction-yellow transition-colors">+1 682-233-4986</a></p>
             </div>
         </section>
 
@@ -63,9 +63,9 @@
                 <h2 class="section-title">Gallery</h2>
                 <p class="section-subtitle">A look at our tough trailers in action.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    <div class="overflow-hidden rounded-lg shadow-lg"><img src="images/trailer-lifted-up.jpg" alt="Dump trailer lifted" class="w-full h-full object-cover"></div>
-                    <div class="overflow-hidden rounded-lg shadow-lg"><img src="images/trailer-with-gravel.jpg" alt="Trailer with gravel" class="w-full h-full object-cover"></div>
-                    <div class="overflow-hidden rounded-lg shadow-lg"><img src="images/trailer-side.jpg" alt="Side view of a dump trailer" class="w-full h-full object-cover"></div>
+                    <div class="gallery-item"><img src="images/trailer-lifted-up.jpg" alt="Dump trailer lifted" class="w-full h-full object-cover"></div>
+                    <div class="gallery-item"><img src="images/trailer-with-gravel.jpg" alt="Trailer with gravel" class="w-full h-full object-cover"></div>
+                    <div class="gallery-item"><img src="images/trailer-side.jpg" alt="Side view of a dump trailer" class="w-full h-full object-cover"></div>
                 </div>
             </div>
         </section>
@@ -75,15 +75,15 @@
                 <h2 class="section-title">Customer Reviews</h2>
                 <p class="section-subtitle">See what our clients have to say.</p>
                 <div class="grid md:grid-cols-3 gap-8 text-center">
-                    <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="review-card">
                         <p class="mb-4">"Texas Tough Rentals was a lifesaver for my weekend project. The trailer was in great condition and the rental process was super easy."</p>
                         <p class="font-bold">- John D.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="review-card">
                         <p class="mb-4">"Affordable pricing and top-notch service. I'll definitely be using them again for my hauling needs."</p>
                         <p class="font-bold">- Sarah P.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-md">
+                    <div class="review-card">
                         <p class="mb-4">"The team was professional and helped me get the right trailer for the job. Highly recommended!"</p>
                         <p class="font-bold">- Mike R.</p>
                     </div>
@@ -100,21 +100,21 @@
 
         <section id="information" class="py-12 bg-charcoal text-faded-cream">
             <div class="container mx-auto flex justify-around text-center">
-                <p><span class="material-symbols-outlined inline-block align-middle mr-2">location_on</span> Keller, TX</p>
-                <p><span class="material-symbols-outlined inline-block align-middle mr-2">call</span><a href="tel:6822334986" class="hover:text-construction-yellow transition-colors">(682) 233-4986</a></p>
-                <p><span class="material-symbols-outlined inline-block align-middle mr-2">mail</span><a href="inquiry.html" class="hover:text-construction-yellow transition-colors">Get a Quote</a></p>
+                <p><span class="material-symbols-outlined info-icon">location_on</span> Keller, TX</p>
+                <p><span class="material-symbols-outlined info-icon">call</span><a href="tel:6822334986" class="hover:text-construction-yellow transition-colors">(682) 233-4986</a></p>
+                <p><span class="material-symbols-outlined info-icon">mail</span><a href="inquiry.html" class="hover:text-construction-yellow transition-colors">Get a Quote</a></p>
             </div>
         </section>
 
         <footer class="bg-charcoal border-t-[3px] border-rustic-red py-8">
             <div class="container mx-auto text-center text-faded-cream">
-                <img src="images/logo.png" alt="Texas Tough Rentals logo" class="h-16 mx-auto mb-4">
+                <img src="images/logo.png" alt="Texas Tough Rentals logo" class="footer-logo">
                 <p>&copy; 2025 Texas Tough Rentals. All Rights Reserved.</p>
             </div>
         </footer>
 
-        <div id="back-to-top" class="fixed bottom-8 right-8">
-            <a href="#top" class="smooth bg-rustic-red text-faded-cream p-3 rounded-full shadow-lg hover:bg-opacity-90 transition-opacity">
+        <div id="back-to-top" class="hidden">
+            <a href="#top" class="back-to-top-btn">
                 <span class="material-symbols-outlined">arrow_upward</span>
             </a>
         </div>

@@ -20,15 +20,15 @@
 
 @layer components {
   .btn {
-    @apply inline-block px-8 py-3 rounded-md text-lg font-semibold uppercase tracking-wide transition-colors duration-300;
+    @apply inline-block px-8 py-3 rounded-md text-lg font-semibold uppercase tracking-wide transition-all duration-300 shadow-md;
   }
 
   .btn-primary {
-    @apply bg-rustic-red text-faded-cream hover:bg-opacity-90;
+    @apply bg-rustic-red text-faded-cream hover:bg-opacity-90 hover:shadow-lg hover:scale-105;
   }
 
   .btn-secondary {
-    @apply bg-construction-yellow text-charcoal hover:bg-opacity-90;
+    @apply bg-construction-yellow text-charcoal hover:bg-opacity-90 hover:shadow-lg hover:scale-105;
   }
 
   .section {
@@ -67,7 +67,7 @@
   .rental-form input[type="email"],
   .rental-form input[type="date"],
   .rental-form select {
-    @apply w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow;
+    @apply w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md;
   }
 
   .date-picker {
@@ -80,6 +80,86 @@
 
   .rental-form .disclaimer {
     @apply text-sm text-charcoal/60 mt-4 block;
+  }
+
+  /* Gallery Image Hover Effects */
+  .gallery-item {
+    @apply overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105;
+  }
+
+  .gallery-item img {
+    @apply w-full h-full object-cover transition-transform duration-300;
+  }
+
+  .gallery-item:hover img {
+    @apply scale-110;
+  }
+
+  /* Review Cards */
+  .review-card {
+    @apply bg-white p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  /* Contact Cards */
+  .contact-card {
+    @apply bg-white p-8 rounded-lg shadow-lg text-center transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  }
+
+  /* Trailer Feature Card */
+  .trailer-card {
+    @apply bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl;
+  }
+
+  /* Back to Top Button */
+  .back-to-top-btn {
+    @apply fixed bottom-8 right-8 bg-rustic-red text-faded-cream p-3 rounded-full shadow-lg hover:bg-construction-yellow hover:text-charcoal transition-all duration-300 hover:scale-110 z-50;
+  }
+
+  /* Navigation Links */
+  .nav-link {
+    @apply transition-all duration-200 hover:text-construction-yellow;
+  }
+
+  /* Form Inputs Enhanced */
+  .rental-form input[type="tel"],
+  .rental-form input[type="datetime-local"],
+  .rental-form textarea {
+    @apply w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md;
+  }
+
+  /* Document Section Enhancement */
+  .document-box {
+    @apply bg-faded-cream/10 p-6 rounded-lg inline-flex flex-col sm:flex-row items-center justify-between max-w-2xl mx-auto transition-all duration-300 hover:bg-faded-cream/20;
+  }
+
+  /* Hero Section Enhancement */
+  .hero-section {
+    @apply relative pt-24 min-h-screen flex items-center bg-cover bg-center;
+  }
+
+  /* Information Section Icons */
+  .info-icon {
+    @apply inline-block align-middle mr-2 text-rustic-red;
+  }
+
+  /* Footer Logo */
+  .footer-logo {
+    @apply h-16 mx-auto mb-4 transition-transform duration-300 hover:scale-105;
+  }
+
+  /* Mobile Menu Enhancement */
+  .mobile-menu-link {
+    @apply block text-center py-4 text-faded-cream hover:bg-rustic-red transition-all duration-200;
+  }
+
+  /* Page Banner */
+  .page-banner {
+    @apply relative bg-cover bg-center text-white py-24;
+  }
+
+  /* Feature List Icons */
+  .feature-icon {
+    @apply text-rustic-red mr-2;
   }
 }
 

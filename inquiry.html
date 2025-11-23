@@ -38,7 +38,7 @@
       <p>Fill out the form below to inquire about renting a trailer. We'll get back to you as soon as possible!</p>
       
       <div class="form-container">
-        <div class="form-success" id="successMessage">
+        <div class="form-success" id="successMessage" style="display:none;">
           <img src="images/logo.png" alt="success" style="height:28px; vertical-align:middle; margin-right:8px;">
           <strong>Success!</strong> Your inquiry has been submitted. We'll contact you shortly.
         </div>
@@ -58,55 +58,55 @@
 
           <div class="form-group">
             <label for="email">Email <span style="color: red;">*</span></label>
-            <input type="email" id="email" name="email" required placeholder="john@example.com">
+            <input type="email" id="email" name="email" required placeholder="you@example.com">
             <div class="form-error" id="emailError"></div>
           </div>
 
           <div class="form-group">
             <label for="company">Company</label>
-            <input type="text" id="company" name="company" placeholder="Company name (optional)">
+            <input type="text" id="company" name="company" placeholder="Optional">
             <div class="form-error" id="companyError"></div>
           </div>
 
           <div class="form-group">
             <label for="pickupLocation">Pickup Location <span style="color: red;">*</span></label>
-            <input type="text" id="pickupLocation" name="pickupLocation" required placeholder="Keller, TX 76244, United States">
+            <input type="text" id="pickupLocation" name="pickupLocation" required placeholder="City, address, or ZIP">
             <div class="form-error" id="pickupLocationError"></div>
           </div>
 
           <div class="form-group">
-            <label for="pickupDate">Pickup Date/Time <span style="color: red;">*</span></label>
+            <label for="pickupDate">Pickup Date & Time <span style="color: red;">*</span></label>
             <input type="datetime-local" id="pickupDate" name="pickupDate" required>
             <div class="form-error" id="pickupDateError"></div>
           </div>
 
           <div class="form-group">
             <label for="deliveryLocation">Delivery Location <span style="color: red;">*</span></label>
-            <input type="text" id="deliveryLocation" name="deliveryLocation" required placeholder="Keller, TX 76244, United States">
+            <input type="text" id="deliveryLocation" name="deliveryLocation" required placeholder="City, address, or ZIP">
             <div class="form-error" id="deliveryLocationError"></div>
           </div>
 
           <div class="form-group">
-            <label for="deliveryDate">Delivery Date/Time <span style="color: red;">*</span></label>
+            <label for="deliveryDate">Delivery Date & Time <span style="color: red;">*</span></label>
             <input type="datetime-local" id="deliveryDate" name="deliveryDate" required>
             <div class="form-error" id="deliveryDateError"></div>
           </div>
 
           <div class="form-group">
-            <label for="dimensions">Dimensions</label>
+            <label for="dimensions">Load Dimensions</label>
             <input type="text" id="dimensions" name="dimensions" placeholder="e.g. 8ft x 6ft x 4ft">
             <div class="form-error" id="dimensionsError"></div>
           </div>
 
           <div class="form-group">
-            <label for="weight">Total Weight (lbs)</label>
-            <input type="number" id="weight" name="weight" min="0" step="any" placeholder="e.g. 1500">
+            <label for="weight">Estimated Weight (lbs)</label>
+            <input type="number" id="weight" name="weight" min="0" placeholder="e.g. 1200">
             <div class="form-error" id="weightError"></div>
           </div>
 
           <div class="form-group">
-            <label for="additionalInfo">Additional Information</label>
-            <textarea id="additionalInfo" name="additionalInfo" placeholder="Any special instructions or notes..."></textarea>
+            <label for="additionalInfo">Additional Info</label>
+            <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="Any special instructions or notes"></textarea>
             <div class="form-error" id="additionalInfoError"></div>
           </div>
 
@@ -152,6 +152,77 @@
     pickupDateInput.min = minDateTime;
     deliveryDateInput.min = minDateTime;
 
+    // Prevent selecting past dates and ensure delivery >= pickup
+    function isDateTimeLocalFormat(v) {
+      return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(v);
+    }
+
+    function showDateError(fieldName, msg) {
+      const errEl = document.getElementById(`${fieldName}Error`);
+      const input = document.getElementById(fieldName);
+      if (errEl) {
+        errEl.textContent = msg;
+        errEl.classList.add('show');
+      }
+      if (input) {
+        input.closest('.form-group')?.classList.add('error');
+      }
+    }
+
+    function clearDateError(fieldName) {
+      const errEl = document.getElementById(`${fieldName}Error`);
+      const input = document.getElementById(fieldName);
+      if (errEl) {
+        errEl.textContent = '';
+        errEl.classList.remove('show');
+      }
+      if (input) {
+        input.closest('.form-group')?.classList.remove('error');
+      }
+    }
+
+    // When pickup changes, update delivery min and validate
+    pickupDateInput.addEventListener('change', () => {
+      clearDateError('pickupDate');
+      if (!pickupDateInput.value || !isDateTimeLocalFormat(pickupDateInput.value)) {
+        showDateError('pickupDate', 'Please choose a valid pickup date and time');
+        return;
+      }
+
+      // Enforce pickup not in the past
+      if (pickupDateInput.value < minDateTime) {
+        showDateError('pickupDate', 'Pickup date/time cannot be in the past');
+        // reset to min allowed
+        pickupDateInput.value = minDateTime;
+      } else {
+        clearDateError('pickupDate');
+      }
+
+      // Ensure delivery cannot be before pickup
+      deliveryDateInput.min = pickupDateInput.value;
+      if (deliveryDateInput.value && deliveryDateInput.value < pickupDateInput.value) {
+        deliveryDateInput.value = pickupDateInput.value;
+        clearDateError('deliveryDate');
+      }
+    });
+
+    // When delivery changes, validate against pickup
+    deliveryDateInput.addEventListener('change', () => {
+      clearDateError('deliveryDate');
+      if (!deliveryDateInput.value || !isDateTimeLocalFormat(deliveryDateInput.value)) {
+        showDateError('deliveryDate', 'Please choose a valid delivery date and time');
+        return;
+      }
+
+      if (deliveryDateInput.value < (pickupDateInput.value || minDateTime)) {
+        showDateError('deliveryDate', 'Delivery date/time must be after pickup date/time');
+        // Snap to pickup if possible
+        if (pickupDateInput.value) deliveryDateInput.value = pickupDateInput.value;
+      } else {
+        clearDateError('deliveryDate');
+      }
+    });
+
     // Clear error on input
     form.querySelectorAll('input, select, textarea').forEach(field => {
       field.addEventListener('input', () => {
@@ -176,7 +247,7 @@
       form.querySelectorAll('.form-group').forEach(group => {
         group.classList.remove('error');
       });
-      successMessage.classList.remove('show');
+      if (successMessage) successMessage.classList.remove('show');
 
       // Collect form data
       const formData = new FormData(form);
@@ -212,9 +283,12 @@
           const payload = await resp.json();
 
           if (resp.ok && payload.success) {
-            successMessage.classList.add('show');
+            if (successMessage) {
+              successMessage.style.display = 'block';
+              successMessage.classList.add('show');
+            }
             form.reset();
-            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            successMessage?.scrollIntoView({ behavior: 'smooth', block: 'center' });
           } else {
             // Server-side validation errors expected in payload.errors as field->message
             if (payload && payload.errors) {

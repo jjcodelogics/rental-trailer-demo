@@ -53,7 +53,7 @@ if (form) {
             const firstError = form.querySelector('.form-group.error');
             if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
-            // --- SUCCESS: Submit Sanitized Data ---
+            // --- SUCCESS: Submit Sanitized Data (send to API) ---
             console.log("Form is valid. Sanitized Data:", result.data);
 
             const btn = form.querySelector("button[type=submit]") || form.querySelector("button");
@@ -63,21 +63,53 @@ if (form) {
                 btn.disabled = true;
             }
 
-            // In a real application, you would send result.data to your server/API here.
-            // Example: await fetch('/api/submit-quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(result.data) });
+            try {
+                const resp = await fetch('/api/submit-quote', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(result.data)
+                });
 
-            // Show success message using the same CSS 'show' class as the inquiry page
-            if (successMsg) {
-                successMsg.classList.add('show');
-                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-                // fallback to alert
-                console.log('Success: form submitted');
-            }
+                const payload = await resp.json().catch(() => ({}));
 
-            // Reset form and UI after a short delay to simulate network
-            setTimeout(() => {
-                form.reset();
+                if (resp.ok && payload && payload.success) {
+                    // show success text requested by user
+                    if (successMsg) {
+                        successMsg.textContent = 'inquiery send!';
+                        successMsg.classList.add('show');
+                        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        alert('inquiery send!');
+                    }
+
+                    form.reset();
+                } else {
+                    // handle validation errors returned from server
+                    if (payload && payload.errors && typeof payload.errors === 'object') {
+                        Object.keys(payload.errors).forEach(fieldName => {
+                            const errEl = document.getElementById(`${fieldName}Error`);
+                            const inputEl = document.getElementById(fieldName) || form.querySelector(`[name="${fieldName}"]`);
+                            if (errEl) {
+                                errEl.textContent = payload.errors[fieldName];
+                                errEl.classList.add('show');
+                                errEl.style.display = 'block';
+                            }
+                            if (inputEl) {
+                                inputEl.classList.add('input-error');
+                                inputEl.closest('.form-group')?.classList.add('error');
+                            }
+                        });
+
+                        const firstError = form.querySelector('.form-group.error');
+                        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        alert('Submission failed. Please try again later.');
+                    }
+                }
+            } catch (err) {
+                console.error('Network error sending inquiry:', err);
+                alert('Network error. Please try again later.');
+            } finally {
                 if (btn && originalText !== null) {
                     btn.innerText = originalText;
                     btn.disabled = false;
@@ -87,7 +119,7 @@ if (form) {
                 if (successMsg) {
                     setTimeout(() => { successMsg.classList.remove('show'); }, 5000);
                 }
-            }, 1200);
+            }
         }
     });
 }

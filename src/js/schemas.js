@@ -6,11 +6,36 @@
 import { z } from 'zod';
 
 /**
- * Simple string sanitizer to escape angle brackets and normalize whitespace
+ * Robust string sanitizer to escape common HTML-sensitive characters and normalize whitespace
  */
 function sanitizeString(s) {
   if (typeof s !== 'string') return s;
-  return s.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g, ' ').trim();
+  // Normalize whitespace first
+  let out = s.replace(/\s+/g, ' ').trim();
+  // Escape special HTML characters to prevent injection when inserted into HTML
+  out = out.replace(/&/g, '&amp;')
+           .replace(/</g, '&lt;')
+           .replace(/>/g, '&gt;')
+           .replace(/"/g, '&quot;')
+           .replace(/'/g, '&#39;');
+  return out;
+}
+
+/**
+ * Parse a "datetime-local" input value (e.g. "2025-11-23T14:30") into a Date using local time.
+ * Returns a Date object (may be invalid if input is malformed).
+ */
+function parseDateTimeLocal(value) {
+  if (typeof value !== 'string') return new Date(NaN);
+  const parts = value.split('T');
+  if (parts.length < 2) return new Date(NaN);
+  const [datePart, timePart] = parts;
+  const dateParts = datePart.split('-').map(Number);
+  const timeParts = timePart.split(':').map(Number);
+  if (dateParts.length < 3 || timeParts.length < 2) return new Date(NaN);
+  const [year, month, day] = dateParts;
+  const [hour, minute] = timeParts;
+  return new Date(year, month - 1, day, hour, minute);
 }
 
 /**
@@ -75,12 +100,12 @@ export const inquirySchema = z.object({
     .transform(s => (s ? sanitizeString(s) : undefined))
 })
 .superRefine((obj, ctx) => {
-  // Validate pickup/delivery datetimes and ordering
+  // Validate pickup/delivery datetimes and ordering using a robust parser
   const now = new Date();
   now.setSeconds(0, 0);
 
-  const pickup = new Date(obj.pickupDate);
-  const delivery = new Date(obj.deliveryDate);
+  const pickup = parseDateTimeLocal(obj.pickupDate);
+  const delivery = parseDateTimeLocal(obj.deliveryDate);
 
   if (isNaN(pickup.getTime())) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Pickup date/time is invalid', path: ['pickupDate'] });
@@ -94,6 +119,9 @@ export const inquirySchema = z.object({
     ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Delivery date/time must be after pickup date/time', path: ['deliveryDate'] });
   }
 });
+
+// Export alias for backward compatibility with code expecting QuoteSchema
+export const QuoteSchema = inquirySchema;
 
 /**
  * Contact form schema

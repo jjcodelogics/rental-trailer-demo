@@ -194,20 +194,48 @@
         additionalInfo: formData.get('additionalInfo') || undefined
       };
 
-      // Validate using Zod
+      // Validate using Zod (client-side)
       const result = validateFormData(inquirySchema, data);
 
       if (result.success) {
-        // Success! Show success message
-        console.log('Form validated successfully:', result.data);
-        successMessage.classList.add('show');
-        form.reset();
+        // Success! Show temporary success locally, then attempt server submission
+        console.log('Form validated successfully (client):', result.data);
 
-        // Scroll to success message
-        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Send sanitized data to server endpoint
+        try {
+          const resp = await fetch('/api/submit-quote', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(result.data)
+          });
 
-        // In a real application, you would send this data to a server
-        // Example: await fetch('/api/inquiries', { method: 'POST', body: JSON.stringify(result.data) });
+          const payload = await resp.json();
+
+          if (resp.ok && payload.success) {
+            successMessage.classList.add('show');
+            form.reset();
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            // Server-side validation errors expected in payload.errors as field->message
+            if (payload && payload.errors) {
+              Object.keys(payload.errors).forEach(fieldName => {
+                const errorElement = document.getElementById(`${fieldName}Error`);
+                const formGroup = document.getElementById(fieldName)?.closest('.form-group');
+                if (errorElement) {
+                  errorElement.textContent = payload.errors[fieldName];
+                  errorElement.classList.add('show');
+                  formGroup?.classList.add('error');
+                }
+              });
+            } else {
+              alert('Submission failed. Please try again later.');
+            }
+          }
+        } catch (err) {
+          console.error('Network/server error:', err);
+          alert('Network error. Please try again later.');
+        }
+
       } else {
         // Show validation errors
         console.error('Validation errors:', result.errors);

@@ -8,8 +8,7 @@
 @layer base {
   body {
     font-family: 'Inter', sans-serif;
-    color: #333333;
-    background-color: #F4F1DE;
+    @apply text-charcoal bg-faded-cream;
   }
   
   h1, h2, h3, h4, h5, h6 {

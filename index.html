@@ -270,6 +270,16 @@
       </p>
       
       <form id="contactForm" class="bg-faded-cream border-4 border-charcoal p-8 md:p-12">
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden bg-construction-yellow border-4 border-charcoal p-6 mb-8 text-center">
+          <p class="text-charcoal font-heading text-xl font-bold uppercase">
+            ✓ Thank You!
+          </p>
+          <p class="text-charcoal font-body mt-2">
+            We'll get back to you within 24 hours.
+          </p>
+        </div>
+        
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div>
             <label for="name" class="block text-charcoal font-heading text-lg font-bold uppercase mb-2">
@@ -433,10 +443,6 @@
         <p class="text-faded-cream font-body">
           &copy; 2025 Texas Tough Rentals — Since 2025. Built for the Tough Jobs!
         </p>
-        <p class="text-faded-cream font-body text-sm mt-2">
-          <a href="#" class="hover:text-construction-yellow transition-colors">Privacy Policy</a> | 
-          <a href="#" class="hover:text-construction-yellow transition-colors ml-2">Terms of Service</a>
-        </p>
       </div>
     </div>
   </footer>
@@ -460,6 +466,7 @@
     
     // Form handling
     const form = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
     
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -472,10 +479,16 @@
       console.log('Form submitted:', data);
       
       // Show success message
-      alert('Thank you! We\'ll get back to you within 24 hours.');
+      successMessage.classList.remove('hidden');
+      successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
       
       // Reset form
       form.reset();
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+      }, 5000);
       
       // In production, this would send to a server
       // fetch('/api/quote', { method: 'POST', body: JSON.stringify(data) });

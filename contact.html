@@ -5,6 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | Texas Tough Rentals</title>
     <link rel="icon" type="image/png" href="images/favicon-32x32.png">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+      
+      // Helper function for tracking CTA events
+      window.trackCTAEvent = function(eventName, eventParams) {
+        gtag('event', eventName, eventParams);
+      };
+    </script>
+    
+    <!-- JSON-LD Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Texas Tough Rentals",
+      "image": "https://texastoughrentals.com/images/logo.png",
+      "description": "Professional dump trailer rentals and hauling services in the Keller, TX area. Built for the tough jobs!",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Keller",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "telephone": "+1-682-233-4986",
+      "email": "texastoughrentals@gmail.com",
+      "priceRange": "$120-$600",
+      "url": "https://texastoughrentals.com",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "10"
+      }
+    }
+    </script>
+    
     <link rel="stylesheet" href="/src/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 </head>
@@ -46,21 +87,34 @@
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                         <span class="material-symbols-outlined text-5xl text-rustic-red mb-4">call</span>
                         <h3 class="text-2xl font-bold mb-2">Phone</h3>
-                        <a href="tel:+16822334986" class="text-lg text-charcoal hover:text-rustic-red transition-colors">+1 682-233-4986</a>
+                        <a href="tel:+16822334986" 
+                           class="text-lg text-charcoal hover:text-rustic-red transition-colors"
+                           onclick="trackCTAEvent('cta_click', {cta_name: 'contact_phone', cta_location: 'contact_page', page: 'contact', phone: '+1-682-233-4986'})">
+                            +1 682-233-4986
+                        </a>
                     </div>
                     
                     <!-- Email -->
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                         <span class="material-symbols-outlined text-5xl text-rustic-red mb-4">mail</span>
                         <h3 class="text-2xl font-bold mb-2">Email</h3>
-                        <a href="mailto:texastoughrentals@gmail.com" class="text-lg text-charcoal hover:text-rustic-red transition-colors">texastoughrentals@gmail.com</a>
+                        <a href="mailto:texastoughrentals@gmail.com" 
+                           class="text-lg text-charcoal hover:text-rustic-red transition-colors"
+                           onclick="trackCTAEvent('cta_click', {cta_name: 'contact_email', cta_location: 'contact_page', page: 'contact'})">
+                            texastoughrentals@gmail.com
+                        </a>
                     </div>
 
                     <!-- Social -->
                     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
                         <span class="material-symbols-outlined text-5xl text-rustic-red mb-4">groups</span>
                         <h3 class="text-2xl font-bold mb-2">Facebook</h3>
-                        <a href="https://www.facebook.com/texastoughrentals" target="_blank" class="text-lg text-charcoal hover:text-rustic-red transition-colors">@texastoughrentals</a>
+                        <a href="https://www.facebook.com/texastoughrentals" 
+                           target="_blank" 
+                           class="text-lg text-charcoal hover:text-rustic-red transition-colors"
+                           onclick="trackCTAEvent('cta_click', {cta_name: 'contact_facebook', cta_location: 'contact_page', page: 'contact'})">
+                            @texastoughrentals
+                        </a>
                     </div>
                 </div>
 

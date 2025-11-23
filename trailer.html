@@ -5,6 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trailer Rental | Texas Tough Rentals</title>
     <link rel="icon" type="image/png" href="images/favicon-32x32.png">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+      
+      // Helper function for tracking CTA events
+      window.trackCTAEvent = function(eventName, eventParams) {
+        gtag('event', eventName, eventParams);
+      };
+    </script>
+    
+    <!-- JSON-LD Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Texas Tough Rentals",
+      "image": "https://texastoughrentals.com/images/logo.png",
+      "description": "Professional dump trailer rentals and hauling services in the Keller, TX area. Built for the tough jobs!",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Keller",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      },
+      "telephone": "+1-682-233-4986",
+      "email": "texastoughrentals@gmail.com",
+      "priceRange": "$120-$600",
+      "url": "https://texastoughrentals.com",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "10"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "14,000 LB Dump Trailer Rental",
+      "description": "Heavy-duty 14,000 lb GVWR dump trailer with hydraulic dump and aluminum ramps. Perfect for hauling and construction projects.",
+      "image": "https://texastoughrentals.com/images/trailer-with-gravel.jpg",
+      "brand": {
+        "@type": "Brand",
+        "name": "Texas Tough Rentals"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "lowPrice": "120",
+        "highPrice": "600",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceSpecification": [
+          {
+            "@type": "UnitPriceSpecification",
+            "price": "120",
+            "priceCurrency": "USD",
+            "name": "Daily Rate (Mon-Thurs)"
+          },
+          {
+            "@type": "UnitPriceSpecification",
+            "price": "160",
+            "priceCurrency": "USD",
+            "name": "Daily Rate (Fri-Sun)"
+          },
+          {
+            "@type": "UnitPriceSpecification",
+            "price": "600",
+            "priceCurrency": "USD",
+            "name": "Weekly Rate"
+          }
+        ]
+      }
+    }
+    </script>
+    
     <link rel="stylesheet" href="/src/css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 </head>
@@ -80,7 +161,11 @@
                             </div>
                             
                             <div class="mt-auto text-center">
-                                <a href="#rental-form" class="btn btn-secondary w-full">Rent this Trailer</a>
+                                <a href="#rental-form" 
+                                   class="btn btn-secondary w-full"
+                                   onclick="trackCTAEvent('cta_click', {cta_name: 'rent_trailer', cta_location: 'trailer_card', page: 'trailer'})">
+                                    Rent this Trailer
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -107,7 +192,11 @@
             <h2 class="section-title mb-2">Request Trailer Rental</h2>
             <p class="section-subtitle mb-6">
                 You can request a rental by filling out the form below or giving us a call at
-                <a href="tel:+1 682-233-4986" class="text-rustic-red font-semibold hover:underline">+1 682-233-4986</a>.
+                <a href="tel:+16822334986" 
+                   class="text-rustic-red font-semibold hover:underline"
+                   onclick="trackCTAEvent('cta_click', {cta_name: 'call_from_form', cta_location: 'rental_form', page: 'trailer', phone: '+1-682-233-4986'})">
+                    +1 682-233-4986
+                </a>.
             </p>
 
             <div class="form-success bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6"
@@ -221,7 +310,11 @@
                         <div class="form-error text-red-500 text-sm mt-1" id="additionalInfoError"></div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-full mb-2">Submit Inquiry</button>
+                    <button type="submit" 
+                            class="btn btn-primary w-full mb-2"
+                            onclick="trackCTAEvent('form_submit', {cta_name: 'rental_form_submit', cta_location: 'rental_form', page: 'trailer'})">
+                        Submit Inquiry
+                    </button>
                     <span class="disclaimer block text-sm text-charcoal/60 mt-2">* = Required Fields</span>
                 </fieldset>
             </form>

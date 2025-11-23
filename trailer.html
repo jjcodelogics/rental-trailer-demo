@@ -28,17 +28,17 @@
         </div>
         <!-- Mobile Menu -->
         <div id="mobile-nav" class="hidden lg:hidden fixed top-0 left-0 w-full h-full bg-charcoal z-40 pt-20">
-            <a href="index.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Home</a>
-            <a href="trailer.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors active">Trailer</a>
-            <a href="trailer.html#rental-form" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Quote</a>
-            <a href="contact.html" class="block text-center py-4 text-faded-cream hover:bg-rustic-red transition-colors">Contact</a>
+            <a href="index.html" class="mobile-menu-link">Home</a>
+            <a href="trailer.html" class="mobile-menu-link active">Trailer</a>
+            <a href="trailer.html#rental-form" class="mobile-menu-link">Quote</a>
+            <a href="contact.html" class="mobile-menu-link">Contact</a>
         </div>
     </header>
 
     <main class="pt-24">
-        <section id="announcement" class="bg-rustic-red text-faded-cream py-2">
+        <section id="announcement" class="bg-rustic-red text-faded-cream py-2 shadow-md">
             <div class="container mx-auto text-center">
-                <p>Looking for expedited shipping or trailer rentals?&nbsp;Give us a call at <a href="tel:+16822334986" class="font-bold hover:underline">+1 682-233-4986</a></p>
+                <p>Looking for expedited shipping or trailer rentals?&nbsp;Give us a call at <a href="tel:+16822334986" class="font-bold hover:text-construction-yellow transition-colors">+1 682-233-4986</a></p>
             </div>
         </section>
 
@@ -54,7 +54,7 @@
                 <h2 class="section-title">Featured Trailers</h2>
                 <div class="flex justify-center">
                     <!-- Trailer Card -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row max-w-4xl">
+                    <div class="trailer-card flex flex-col md:flex-row max-w-4xl">
                         <div class="md:w-1/2">
                             <img src="images/trailer-with-gravel.jpg" alt="14,000 lb dump trailer" class="w-full h-full object-cover">
                         </div>
@@ -93,7 +93,7 @@
                 <h2 class="section-title text-faded-cream">Rental Documents</h2>
                 <p class="section-subtitle text-faded-cream/80">Please be sure to review the below documents before requesting a rental.</p>
                 <div class="mt-8">
-                    <div class="bg-faded-cream/10 p-6 rounded-lg inline-flex flex-col sm:flex-row items-center justify-between max-w-2xl mx-auto">
+                    <div class="document-box">
                         <span class="document-title text-lg font-semibold mb-4 sm:mb-0 sm:mr-8">Trailer Liability Information</span>
                         <a href="src/trailer-liability-flyer.pdf" class="btn btn-secondary" target="_blank" rel="noopener">View PDF</a>
                     </div>
@@ -103,7 +103,7 @@
 
 <section id="rental-form" class="section">
     <div class="container">
-        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-xl p-8">
             <h2 class="section-title mb-2">Request Trailer Rental</h2>
             <p class="section-subtitle mb-6">
                 You can request a rental by filling out the form below or giving us a call at
@@ -125,7 +125,7 @@
                             Name <span class="text-rustic-red">*</span>
                         </label>
                         <input type="text" id="name" name="name" required placeholder="John Doe"
-                            class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-faded-cream focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow">
+                            class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
                         <div class="form-error text-red-500 text-sm mt-1" id="nameError"></div>
                     </div>
 
@@ -136,7 +136,7 @@
                                 Phone <span class="text-rustic-red">*</span>
                             </label>
                             <input type="tel" id="phone" name="phone" required placeholder="555-123-4567"
-                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-faded-cream focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow">
+                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
                             <div class="form-error text-red-500 text-sm mt-1" id="phoneError"></div>
                         </div>
                         <div class="form-group mb-4">
@@ -145,7 +145,7 @@
                                 Email <span class="text-rustic-red">*</span>
                             </label>
                             <input type="email" id="email" name="email" required placeholder="you@example.com"
-                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-faded-cream focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow">
+                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
                             <div class="form-error text-red-500 text-sm mt-1" id="emailError"></div>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
                             Company
                         </label>
                         <input type="text" id="company" name="company" placeholder="Optional"
-                            class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-faded-cream focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow">
+                            class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
                         <div class="form-error text-red-500 text-sm mt-1" id="companyError"></div>
                     </div>
 
@@ -198,7 +198,7 @@
                                 Pickup Date &amp; Time <span class="text-rustic-red">*</span>
                             </label>
                             <input type="datetime-local" id="pickupDate" name="pickupDate" required
-                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-faded-cream focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow">
+                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
                             <div class="form-error text-red-500 text-sm mt-1" id="pickupDateError"></div>
                         </div>
                         <div class="form-group mb-4">
@@ -206,7 +206,7 @@
                                 Drop-off Date &amp; Time <span class="text-rustic-red">*</span>
                             </label>
                             <input type="datetime-local" id="deliveryDate" name="deliveryDate" required
-                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-faded-cream focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow">
+                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
                             <div class="form-error text-red-500 text-sm mt-1" id="deliveryDateError"></div>
                         </div>
                     </div>
@@ -217,7 +217,7 @@
                         </label>
                         <textarea id="additionalInfo" name="additionalInfo" rows="4"
                             placeholder="Any special instructions or notes"
-                            class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-faded-cream focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-shadow"></textarea>
+                            class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md"></textarea>
                         <div class="form-error text-red-500 text-sm mt-1" id="additionalInfoError"></div>
                     </div>
 
@@ -236,15 +236,15 @@
                 <h2 class="section-title text-faded-cream">Customer Reviews</h2>
                 <p class="section-subtitle text-faded-cream/80">See what our clients have to say.</p>
                 <div class="grid md:grid-cols-3 gap-8 text-center">
-                    <div class="bg-white p-8 rounded-lg shadow-md text-charcoal">
+                    <div class="review-card">
                         <p class="mb-4">"Josh with Texas Tough was awesome to work with. Quick and easy trailer pick up and drop off. Worked around my schedule with zero issues. Trailer is awesome and one of the best quality trailers you can get. Highly highly recommend working with Josh on any future rental or project needs."</p>
                         <p class="font-bold">- Cody Smith.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-md text-charcoal">
+                    <div class="review-card">
                         <p class="mb-4">"Affordable pricing and top-notch service. I'll definitely be using them again for my hauling needs."</p>
                         <p class="font-bold">- Sarah P.</p>
                     </div>
-                    <div class="bg-white p-8 rounded-lg shadow-md text-charcoal">
+                    <div class="review-card">
                         <p class="mb-4">"The team was professional and helped me get the right trailer for the job. Highly recommended!"</p>
                         <p class="font-bold">- Mike R.</p>
                     </div>
@@ -254,22 +254,22 @@
 
         <section id="information" class="bg-faded-cream py-12">
             <div class="container mx-auto flex flex-col sm:flex-row justify-center items-center text-center sm:text-left space-y-4 sm:space-y-0 sm:space-x-8 text-charcoal">
-                <p class="flex items-center"><span class="material-symbols-outlined text-rustic-red mr-2">location_on</span>Watauga, TX</p>
-                <p class="flex items-center"><span class="material-symbols-outlined text-rustic-red mr-2">call</span><a href="tel:+16822334986" class="hover:underline">+1 682-233-4986</a></p>
-                <p class="flex items-center"><span class="material-symbols-outlined text-rustic-red mr-2">mail</span><a href="mailto:texastoughrentals@gmail.com" class="hover:underline">texastoughrentals@gmail.com</a></p>
+                <p class="flex items-center"><span class="material-symbols-outlined info-icon">location_on</span>Watauga, TX</p>
+                <p class="flex items-center"><span class="material-symbols-outlined info-icon">call</span><a href="tel:+16822334986" class="hover:text-rustic-red transition-colors">+1 682-233-4986</a></p>
+                <p class="flex items-center"><span class="material-symbols-outlined info-icon">mail</span><a href="mailto:texastoughrentals@gmail.com" class="hover:text-rustic-red transition-colors">texastoughrentals@gmail.com</a></p>
             </div>
         </section>
     </main>
 
     <footer class="bg-charcoal border-t-[3px] border-rustic-red py-8">
         <div class="container mx-auto text-center text-faded-cream">
-            <img src="images/logo.png" alt="Texas Tough Rentals logo" class="h-16 mx-auto mb-4">
+            <img src="images/logo.png" alt="Texas Tough Rentals logo" class="footer-logo">
             <p>&copy; 2025 Texas Tough Rentals. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <div id="back-to-top" class="fixed bottom-4 right-4 z-50">
-        <a href="#top" class="bg-rustic-red text-faded-cream rounded-full p-3 shadow-lg hover:bg-construction-yellow transition-colors flex items-center">
+    <div id="back-to-top" class="hidden">
+        <a href="#top" class="back-to-top-btn">
             <span class="material-symbols-outlined">expand_less</span>
         </a>
     </div>
@@ -288,6 +288,16 @@
           link.addEventListener('click', () => {
             mobileNav.classList.add('hidden');
           });
+        });
+
+        // Back to top button visibility
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
+            }
         });
 
         // Smooth scroll for back-to-top

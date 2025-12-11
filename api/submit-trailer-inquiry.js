@@ -349,3 +349,9 @@ export default async function handler(request, response) {
     return response.status(500).json({ success: false, message: 'An unexpected error occurred.' });
   }
 }
+
+const apiKey = process.env.BREVO_API_KEY;
+
+if (!apiKey) {
+  throw new Error('BREVO_API_KEY is not configured');
+}

@@ -5,6 +5,17 @@ export default async function handler(request, response) {
     return response.status(405).json({ message: 'Method Not Allowed' });
   }
 
+  // Debug: Check if API key exists (without exposing full key)
+  const apiKey = process.env.BREVO_API_KEY;
+  console.log('API Key exists:', !!apiKey);
+  console.log('API Key length:', apiKey?.length);
+  console.log('API Key first 10 chars:', apiKey?.substring(0, 10));
+  
+  if (!apiKey) {
+    console.error('BREVO_API_KEY is not set in environment variables');
+    return response.status(500).json({ success: false, message: 'Email service not configured' });
+  }
+
   try {
     const validation = trailerInquirySchema.safeParse(request.body);
 
@@ -326,7 +337,7 @@ export default async function handler(request, response) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'api-key': process.env.BREVO_API_KEY,
+          'api-key': process.env.BREVO_API_KEY.trim(),
         },
         body: JSON.stringify(customerEmailPayload),
       });
@@ -350,8 +361,4 @@ export default async function handler(request, response) {
   }
 }
 
-const apiKey = process.env.BREVO_API_KEY;
 
-if (!apiKey) {
-  throw new Error('BREVO_API_KEY is not configured');
-}

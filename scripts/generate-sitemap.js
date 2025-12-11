@@ -10,12 +10,34 @@ const __dirname = dirname(__filename);
 // Your website hostname
 const hostname = 'https://texastoughtrentals.com'; // Update with your actual domain
 
-// Define your pages
+// Define your pages with clean URLs
+const currentDate = new Date().toISOString();
+
 const urls = [
-  { url: '/', changefreq: 'weekly', priority: 1.0 },
-  { url: '/trailer.html', changefreq: 'weekly', priority: 0.9 },
-  { url: '/about-me.html', changefreq: 'monthly', priority: 0.7 },
-  { url: '/contact.html', changefreq: 'monthly', priority: 0.8 },
+  { 
+    url: '/', 
+    lastmod: currentDate,
+    changefreq: 'weekly', 
+    priority: 1.0 
+  },
+  { 
+    url: '/trailer', 
+    lastmod: currentDate,
+    changefreq: 'weekly', 
+    priority: 0.9 
+  },
+  { 
+    url: '/about-me', 
+    lastmod: currentDate,
+    changefreq: 'monthly', 
+    priority: 0.7 
+  },
+  { 
+    url: '/contact', 
+    lastmod: currentDate,
+    changefreq: 'monthly', 
+    priority: 0.8 
+  },
 ];
 
 // Generate sitemap WITHOUT XSLT (pure XML for Google)

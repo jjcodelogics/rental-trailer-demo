@@ -21,16 +21,25 @@ const urls = [
 // Generate sitemap WITHOUT XSLT (pure XML for Google)
 async function generateSitemap() {
   const stream = new SitemapStream({ 
-    hostname
-    // Removed xslUrl - Google doesn't like styled sitemaps
+    hostname,
+    xmlns: {
+      news: false,
+      xhtml: false,
+      image: false,
+      video: false
+    }
   });
 
   const data = await streamToPromise(Readable.from(urls).pipe(stream));
   
+  // Format XML with proper indentation for readability
+  const xmlString = data.toString();
+  
   // Write sitemap.xml
-  writeFileSync(resolve(__dirname, '../public/sitemap.xml'), data.toString());
+  writeFileSync(resolve(__dirname, '../public/sitemap.xml'), xmlString);
   
   console.log('✅ Sitemap generated successfully at public/sitemap.xml');
+  console.log(`   Total URLs: ${urls.length}`);
 }
 
 // Run the function

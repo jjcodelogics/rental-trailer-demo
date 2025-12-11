@@ -12,6 +12,9 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/src/css/style.css">
+    
+    <!-- Vercel Analytics -->
+    <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body id="top" class="bg-faded-cream">
     <header>
@@ -48,16 +51,14 @@
         </section>
 
         <section id="hero-cta" class="relative pt-24 min-h-screen flex items-center bg-cover bg-center" style="background-image: linear-gradient(rgba(51, 51, 51, 0.7), rgba(51, 51, 51, 0.7)), url('images/car-with-trailer.jpg');">
-            <div class="container mx-auto text-center">
-                <h2 class="text-faded-cream font-heading text-6xl md:text-8xl font-bold mb-6 leading-tight tracking-wide">
+            <div class="container mx-auto text-center px-4">
+                <h2 class="text-faded-cream font-heading text-4xl sm:text-6xl md:text-8xl font-bold mb-8 sm:mb-12 leading-tight tracking-wide">
                     Texas Tough Rentals
                 </h2>
-                <br>
-                <br>
-                <h3 class="text-faded-cream font-body text-xl mb-8">Built for the Tough Jobs in TX area!</h3>
-                <div class="button-group space-x-5">
+                <h3 class="text-faded-cream font-body text-lg sm:text-xl mb-8">Built for the Tough Jobs in TX area!</h3>
+                <div class="button-group flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center">
                     <a href="trailer.html" class="btn btn-primary">View Trailers</a>
-                    <a href="inquiry.html" class="btn btn-secondary">Get a Quote</a>
+                    <a href="trailer.html#rental-form" class="btn btn-secondary">Get a Quote</a>
                 </div>
             </div>
         </section>
@@ -103,10 +104,10 @@
         </section>
 
         <section id="information" class="py-12 bg-charcoal text-faded-cream">
-            <div class="container mx-auto flex justify-around text-center">
-                <p><span class="material-symbols-outlined info-icon">location_on</span> Keller, TX</p>
-                <p><span class="material-symbols-outlined info-icon">call</span><a href="tel:6822334986" class="hover:text-construction-yellow transition-colors">(682) 233-4986</a></p>
-                <p><span class="material-symbols-outlined info-icon">mail</span><a href="inquiry.html" class="hover:text-construction-yellow transition-colors">Get a Quote</a></p>
+            <div class="container mx-auto flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-12 text-center">
+                <p class="flex items-center"><span class="material-symbols-outlined info-icon">location_on</span> Keller, TX</p>
+                <p class="flex items-center"><span class="material-symbols-outlined info-icon">call</span><a href="tel:6822334986" class="hover:text-construction-yellow transition-colors">(682) 233-4986</a></p>
+                <p class="flex items-center"><span class="material-symbols-outlined info-icon">mail</span><a href="trailer.html#rental-form" class="hover:text-construction-yellow transition-colors">Get a Quote</a></p>
             </div>
         </section>
 

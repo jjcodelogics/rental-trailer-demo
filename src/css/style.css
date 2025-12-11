@@ -151,6 +151,10 @@
   .mobile-menu-link {
     @apply block text-center py-4 text-faded-cream hover:bg-rustic-red transition-all duration-200;
   }
+  
+  .mobile-menu-link.active {
+    @apply bg-rustic-red text-construction-yellow font-bold;
+  }
 
   /* Page Banner */
   .page-banner {

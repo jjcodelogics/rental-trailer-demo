@@ -1,5 +1,6 @@
 import { SitemapStream, streamToPromise } from 'sitemap';
-import { createWriteStream } from 'fs';
+import { writeFileSync } from 'fs';
+import { Readable } from 'stream';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -7,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Your website hostname
-const hostname = 'https://texastoughrentals.com'; // Update with your actual domain
+const hostname = 'https://texastoughtrentals.com'; // Update with your actual domain
 
 // Define your pages
 const urls = [
@@ -17,27 +18,18 @@ const urls = [
   { url: '/contact.html', changefreq: 'monthly', priority: 0.8 },
 ];
 
+// Generate sitemap WITHOUT XSLT (pure XML for Google)
 async function generateSitemap() {
-  const sitemapPath = resolve(__dirname, '../public/sitemap.xml');
+  const stream = new SitemapStream({ 
+    hostname
+    // Removed xslUrl - Google doesn't like styled sitemaps
+  });
+
+  const data = await streamToPromise(Readable.from(urls).pipe(stream));
   
-  // Create a stream to write to
-  const writeStream = createWriteStream(sitemapPath);
-  const sitemap = new SitemapStream({ hostname });
-
-  console.log('Generating sitemap...');
-
-  // Write each URL to the sitemap
-  urls.forEach(url => sitemap.write(url));
-
-  // End the stream
-  sitemap.end();
-
-  // Generate sitemap
-  const sitemapOutput = await streamToPromise(sitemap);
+  // Write sitemap.xml
+  writeFileSync(resolve(__dirname, '../public/sitemap.xml'), data.toString());
   
-  writeStream.write(sitemapOutput.toString());
-  writeStream.end();
-
   console.log('✅ Sitemap generated successfully at public/sitemap.xml');
 }
 

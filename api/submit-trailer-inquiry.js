@@ -1,16 +1,79 @@
 import { trailerInquirySchema } from '../src/js/trailer-schema.js';
 
+// In-memory rate limiter
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const MAX_REQUESTS = 3; // 3 requests per minute
+
+/**
+ * Rate limiter function to prevent spam/abuse
+ * @param {string} identifier - IP address or unique identifier
+ * @returns {boolean} - true if allowed, false if rate limited
+ */
+function checkRateLimit(identifier) {
+  const now = Date.now();
+  const userRequests = rateLimitMap.get(identifier) || [];
+  
+  // Remove expired entries (older than the time window)
+  const validRequests = userRequests.filter(timestamp => now - timestamp < RATE_LIMIT_WINDOW);
+  
+  // Check if user has exceeded rate limit
+  if (validRequests.length >= MAX_REQUESTS) {
+    return false;
+  }
+  
+  // Add current request timestamp
+  validRequests.push(now);
+  rateLimitMap.set(identifier, validRequests);
+  
+  // Cleanup old entries to prevent memory leaks
+  if (rateLimitMap.size > 1000) {
+    const entries = Array.from(rateLimitMap.entries());
+    entries.forEach(([key, timestamps]) => {
+      const valid = timestamps.filter(ts => now - ts < RATE_LIMIT_WINDOW);
+      if (valid.length === 0) {
+        rateLimitMap.delete(key);
+      }
+    });
+  }
+  
+  return true;
+}
+
 export default async function handler(request, response) {
+  // Only accept POST requests
   if (request.method !== 'POST') {
     return response.status(405).json({ message: 'Method Not Allowed' });
   }
 
+  // Validate Content-Type
+  const contentType = request.headers['content-type'];
+  if (!contentType || !contentType.includes('application/json')) {
+    return response.status(415).json({ success: false, message: 'Content-Type must be application/json' });
+  }
+
+  // Rate limiting check
+  const clientIp = request.headers['x-forwarded-for']?.split(',')[0]?.trim() || 
+                   request.headers['x-real-ip'] || 
+                   request.socket?.remoteAddress || 
+                   'unknown';
+  
+  if (!checkRateLimit(clientIp)) {
+    console.warn(`Rate limit exceeded for IP: ${clientIp}`);
+    return response.status(429).json({ 
+      success: false, 
+      message: 'Too many requests. Please try again in a minute.' 
+    });
+  }
+
+  // Check API key configuration
   if (!process.env.BREVO_API_KEY) {
     console.error('BREVO_API_KEY is not set in environment variables');
     return response.status(500).json({ success: false, message: 'Email service not configured' });
   }
 
   try {
+    // Validate and sanitize input
     const validation = trailerInquirySchema.safeParse(request.body);
 
     if (!validation.success) {
@@ -167,7 +230,7 @@ export default async function handler(request, response) {
             name: sanitizedData.name,
           },
         ],
-        subject: "✅ Your Inquiry Has Been Received - Texas Tough Rentals",
+        subject: "We have received your inquiry - Texas Tough Rentals",
         htmlContent: `
           <!DOCTYPE html>
           <html>

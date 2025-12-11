@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://texastoughrentals.com/sitemap.xml
+
+# Disallow admin/api routes
+Disallow: /api/

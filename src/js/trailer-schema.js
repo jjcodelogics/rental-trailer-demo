@@ -43,7 +43,9 @@ export const trailerInquirySchema = z.object({
     .optional()
     .transform(s => (s ? sanitizeString(s) : undefined)),
 
-  'trailer-select': z.string().nonempty('Trailer selection is required.'),
+  'trailer-select': z.enum(['14000-lb-dump-trailer'], {
+    errorMap: () => ({ message: 'Invalid trailer selection.' })
+  }),
 
   deliveryOption: z.enum(['ownTruck', 'deliverPickup'], {
     errorMap: () => ({ message: 'Please select a delivery option.' })
@@ -52,10 +54,16 @@ export const trailerInquirySchema = z.object({
   'trailer-use-reason': z.string().optional().transform(s => (s ? sanitizeString(s) : undefined)),
 
   pickupDate: z.string()
-    .nonempty('Pickup date/time is required'),
+    .nonempty('Pickup date/time is required')
+    .refine(val => !isNaN(Date.parse(val)), {
+      message: 'Invalid pickup date format'
+    }),
 
   deliveryDate: z.string()
-    .nonempty('Drop-off date/time is required'),
+    .nonempty('Drop-off date/time is required')
+    .refine(val => !isNaN(Date.parse(val)), {
+      message: 'Invalid drop-off date format'
+    }),
 
   additionalInfo: z.string()
     .max(1000, 'Additional information must be less than 1000 characters')

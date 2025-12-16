@@ -8,6 +8,22 @@ export function handleInquiryForm() {
 
     if (!form) return;
 
+    // Set minimum date/time to now for date fields
+    const pickupDateInput = document.getElementById('pickupDate');
+    const deliveryDateInput = document.getElementById('deliveryDate');
+    
+    if (pickupDateInput || deliveryDateInput) {
+        const now = new Date();
+        const minDateTime = now.toISOString().slice(0, 16);
+        
+        if (pickupDateInput) {
+            pickupDateInput.min = minDateTime;
+        }
+        if (deliveryDateInput) {
+            deliveryDateInput.min = minDateTime;
+        }
+    }
+
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 

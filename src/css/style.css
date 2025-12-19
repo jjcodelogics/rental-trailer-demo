@@ -24,7 +24,8 @@
   }
 
   .btn-primary {
-    @apply bg-rustic-red text-faded-cream hover:bg-opacity-90 hover:shadow-lg hover:scale-105;
+    @apply text-faded-cream hover:bg-opacity-90 hover:shadow-lg hover:scale-105;
+    background-color: #3B82F6;
   }
 
   .btn-secondary {

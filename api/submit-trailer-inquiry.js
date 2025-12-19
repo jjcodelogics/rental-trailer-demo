@@ -92,6 +92,54 @@ async function calculateDistance(deliveryAddress) {
   }
 }
 
+/**
+ * Calculate rental price based on number of days
+ * Pricing tiers:
+ * - 1 day: $130/day
+ * - 2-6 days: $95/day
+ * - 7-29 days: $85/day
+ * - 30+ days: $70/day
+ * @param {string} pickupDate - ISO date string for pickup
+ * @param {string} deliveryDate - ISO date string for delivery
+ * @returns {Object} - {days, dailyRate, trailerCost}
+ */
+function calculateRentalPrice(pickupDate, deliveryDate) {
+  const pickup = new Date(pickupDate);
+  const delivery = new Date(deliveryDate);
+  
+  // Calculate the difference in milliseconds and convert to days
+  const diffInMs = delivery - pickup;
+  const days = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+  
+  let dailyRate;
+  if (days === 1) {
+    dailyRate = 130;
+  } else if (days >= 2 && days <= 6) {
+    dailyRate = 95;
+  } else if (days >= 7 && days <= 29) {
+    dailyRate = 85;
+  } else if (days >= 30) {
+    dailyRate = 70;
+  } else {
+    // Invalid date range (delivery before pickup)
+    return { days: 0, dailyRate: 0, trailerCost: 0 };
+  }
+  
+  const trailerCost = days * dailyRate;
+  
+  return { days, dailyRate, trailerCost };
+}
+
+/**
+ * Calculate delivery cost based on distance
+ * @param {number} distanceMiles - Distance in miles
+ * @returns {number} - Delivery cost ($2 per mile)
+ */
+function calculateDeliveryCost(distanceMiles) {
+  const DELIVERY_RATE_PER_MILE = 2;
+  return distanceMiles * DELIVERY_RATE_PER_MILE;
+}
+
 // In-memory rate limiter
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
@@ -179,11 +227,21 @@ export default async function handler(request, response) {
 
     const sanitizedData = validation.data;
 
+    // Calculate rental pricing
+    const pricingInfo = calculateRentalPrice(sanitizedData.pickupDate, sanitizedData.deliveryDate);
+    
     // Calculate distance if delivery address is provided
     let distanceInfo = null;
+    let deliveryCost = 0;
     if (sanitizedData.deliveryOption === 'deliverPickup' && sanitizedData.deliveryAddress) {
       distanceInfo = await calculateDistance(sanitizedData.deliveryAddress);
+      if (distanceInfo) {
+        deliveryCost = calculateDeliveryCost(distanceInfo.distanceMiles);
+      }
     }
+    
+    // Calculate total estimated price
+    const totalEstimatedPrice = pricingInfo.trailerCost + deliveryCost;
 
     // Send email to owner
     try {
@@ -290,6 +348,41 @@ export default async function handler(request, response) {
                             </tr>
                             ` : ''}
                           </table>
+                          
+                          <h2 style="color: #333333; margin: 30px 0 20px 0; font-size: 22px; font-family: 'Oswald', 'Arial Black', sans-serif; text-transform: uppercase; border-bottom: 3px solid #FFC300; padding-bottom: 10px;">
+                            💰 Price Estimate
+                          </h2>
+                          
+                          <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                            <tr>
+                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">📅 Rental Duration</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333; font-weight: 600;">${pricingInfo.days} day${pricingInfo.days !== 1 ? 's' : ''}</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">💵 Daily Rate</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${pricingInfo.dailyRate} per day</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🚛 Trailer Rental Cost</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333; font-weight: 600;">$${pricingInfo.trailerCost.toFixed(2)}</td>
+                            </tr>
+                            ${deliveryCost > 0 ? `
+                            <tr>
+                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🚚 Delivery Cost</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${deliveryCost.toFixed(2)} <span style="color: #666; font-size: 13px;">(${distanceInfo.distanceMiles} miles × $2/mile)</span></td>
+                            </tr>
+                            ` : ''}
+                            <tr>
+                              <td style="padding: 12px; background-color: #9B2226; font-weight: 700; border: 2px solid #FFC300; color: #F4F1DE; font-size: 16px;">💵 TOTAL ESTIMATE</td>
+                              <td style="padding: 12px; border: 2px solid #FFC300; background-color: #FFF9E6; font-weight: 700; font-size: 20px; color: #9B2226;">$${totalEstimatedPrice.toFixed(2)}</td>
+                            </tr>
+                          </table>
+                          
+                          <div style="margin-top: 20px; padding: 15px; background-color: #FFF9E6; border-left: 4px solid #FFC300; border-radius: 4px;">
+                            <p style="margin: 0; color: #666; font-size: 13px;">
+                              <strong>Note:</strong> This is an automated estimate based on the pricing tiers and delivery distance. Final pricing may vary. Please review and confirm with the customer.
+                            </p>
+                          </div>
                           
                           <div style="margin-top: 30px; padding: 20px; background-color: #FFF9E6; border-left: 4px solid #FFC300; border-radius: 4px;">
                             <p style="margin: 0; color: #333333; font-size: 14px;">

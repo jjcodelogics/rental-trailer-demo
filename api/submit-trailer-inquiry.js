@@ -406,7 +406,7 @@ export default async function handler(request, response) {
                           </div>
                           
                           <div style="margin-top: 30px; text-align: center;">
-                            <a href="${process.env.BASE_URL || 'https://texastoughrentals.com'}/confirm-booking.html?name=${encodeURIComponent(sanitizedData.name)}&email=${encodeURIComponent(sanitizedData.email)}&trailer=${encodeURIComponent(sanitizedData['trailer-select'])}&pickup=${encodeURIComponent(sanitizedData.pickupDate)}&delivery=${encodeURIComponent(sanitizedData.deliveryDate)}" 
+                            <a href="https://texastoughrentals.com/confirm-booking?name=${encodeURIComponent(sanitizedData.name)}&email=${encodeURIComponent(sanitizedData.email)}&trailer=${encodeURIComponent(sanitizedData['trailer-select'])}&pickup=${encodeURIComponent(sanitizedData.pickupDate)}&delivery=${encodeURIComponent(sanitizedData.deliveryDate)}" 
                                style="display: inline-block; background-color: #22C55E; color: white; padding: 15px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; text-transform: uppercase; font-family: 'Oswald', 'Arial Black', sans-serif; letter-spacing: 1px; box-shadow: 0 4px 6px rgba(34, 197, 94, 0.3); border: 2px solid #16A34A;">
                               ✅ Confirm Booking
                             </a>

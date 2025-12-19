@@ -261,19 +261,21 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="form-group mb-4">
-                            <label for="pickupDate" class="block font-semibold mb-1">
+                            <label for="pickupDate" class="block font-semibold mb-2 flex items-center">
+                                <span class="material-symbols-outlined align-middle mr-2 text-construction-yellow">calendar_today</span>
                                 Pickup Date &amp; Time <span class="text-rustic-red">*</span>
                             </label>
                             <input type="datetime-local" id="pickupDate" name="pickupDate" required
-                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
+                                class="w-full px-4 py-3 rounded-lg border-2 border-charcoal/20 bg-white hover:border-construction-yellow/50 focus:ring-2 focus:ring-construction-yellow focus:border-construction-yellow transition-all duration-200 shadow-sm hover:shadow-md focus:shadow-lg text-base cursor-pointer">
                             <div class="form-error text-red-500 text-sm mt-1" id="pickupDateError"></div>
                         </div>
                         <div class="form-group mb-4">
-                            <label for="deliveryDate" class="block font-semibold mb-1">
+                            <label for="deliveryDate" class="block font-semibold mb-2 flex items-center">
+                                <span class="material-symbols-outlined align-middle mr-2 text-construction-yellow">event</span>
                                 Drop-off Date &amp; Time <span class="text-rustic-red">*</span>
                             </label>
                             <input type="datetime-local" id="deliveryDate" name="deliveryDate" required
-                                class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
+                                class="w-full px-4 py-3 rounded-lg border-2 border-charcoal/20 bg-white hover:border-construction-yellow/50 focus:ring-2 focus:ring-construction-yellow focus:border-construction-yellow transition-all duration-200 shadow-sm hover:shadow-md focus:shadow-lg text-base cursor-pointer">
                             <div class="form-error text-red-500 text-sm mt-1" id="deliveryDateError"></div>
                         </div>
                     </div>

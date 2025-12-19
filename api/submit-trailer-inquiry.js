@@ -1,7 +1,7 @@
 import { trailerInquirySchema } from '../src/js/trailer-schema.js';
 
-// Business address
-const BUSINESS_ADDRESS = '8637 Shadow Trace Dr, Fort Worth, Texas 76244, United States';
+// Business address - simplified format for better geocoding
+const BUSINESS_ADDRESS = '8637 Shadow Trace Dr, Fort Worth, TX 76244';
 
 /**
  * Geocode an address using OpenStreetMap Nominatim API
@@ -10,8 +10,6 @@ const BUSINESS_ADDRESS = '8637 Shadow Trace Dr, Fort Worth, Texas 76244, United 
  */
 async function geocodeAddress(address) {
   try {
-    console.log('Geocoding address:', address);
-    
     const url = new URL('https://nominatim.openstreetmap.org/search');
     url.searchParams.append('q', address);
     url.searchParams.append('format', 'json');
@@ -29,7 +27,6 @@ async function geocodeAddress(address) {
     }
     
     const data = await response.json();
-    console.log('Geocoding response:', data);
     
     if (data && data.length > 0) {
       return {
@@ -38,7 +35,6 @@ async function geocodeAddress(address) {
       };
     }
     
-    console.warn('No geocoding results found for:', address);
     return null;
   } catch (error) {
     console.error('Geocoding error:', error);
@@ -79,21 +75,16 @@ function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
  */
 async function calculateDistance(deliveryAddress) {
   try {
-    console.log('Calculating distance for address:', deliveryAddress);
+    // Geocode addresses sequentially with delay to avoid rate limiting
+    const businessCoords = await geocodeAddress(BUSINESS_ADDRESS);
     
-    // Geocode both addresses
-    const [businessCoords, deliveryCoords] = await Promise.all([
-      geocodeAddress(BUSINESS_ADDRESS),
-      geocodeAddress(deliveryAddress)
-    ]);
+    // Add 1 second delay between requests to respect Nominatim rate limit
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
-    console.log('Business coords:', businessCoords);
-    console.log('Delivery coords:', deliveryCoords);
+    const deliveryCoords = await geocodeAddress(deliveryAddress);
     
     if (!businessCoords || !deliveryCoords) {
       console.warn('Could not geocode one or both addresses');
-      console.warn('Business address geocoded:', !!businessCoords);
-      console.warn('Delivery address geocoded:', !!deliveryCoords);
       return null;
     }
     
@@ -103,8 +94,6 @@ async function calculateDistance(deliveryAddress) {
       deliveryCoords.lat,
       deliveryCoords.lon
     );
-    
-    console.log('Calculated distance:', distanceMiles, 'miles');
     
     return { distanceMiles };
   } catch (error) {
@@ -256,19 +245,15 @@ export default async function handler(request, response) {
     let fullDeliveryAddress = null;
     if (sanitizedData.deliveryOption === 'deliverPickup' && sanitizedData.deliveryStreet) {
       fullDeliveryAddress = `${sanitizedData.deliveryStreet}, ${sanitizedData.deliveryCity}, ${sanitizedData.deliveryState} ${sanitizedData.deliveryZipcode}`;
-      console.log('Constructed delivery address:', fullDeliveryAddress);
     }
     
     // Calculate distance if delivery address is provided
     let distanceInfo = null;
     let deliveryCost = 0;
     if (fullDeliveryAddress) {
-      console.log('Attempting to calculate distance for:', fullDeliveryAddress);
       distanceInfo = await calculateDistance(fullDeliveryAddress);
-      console.log('Distance calculation result:', distanceInfo);
       if (distanceInfo) {
         deliveryCost = calculateDeliveryCost(distanceInfo.distanceMiles);
-        console.log('Delivery cost calculated:', deliveryCost);
       }
     }
     

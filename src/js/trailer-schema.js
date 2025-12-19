@@ -51,21 +51,54 @@ export const trailerInquirySchema = z.object({
     errorMap: () => ({ message: 'Please select a delivery option.' })
   }),
 
-  deliveryAddress: z.string()
-    .min(5, 'Delivery address must be at least 5 characters')
-    .max(200, 'Delivery address must be less than 200 characters')
+  deliveryStreet: z.string()
+    .min(5, 'Street address must be at least 5 characters')
+    .max(150, 'Street address must be less than 150 characters')
     .transform(sanitizeString)
     .optional()
     .refine(
       (val, ctx) => {
-        // Get the parent object to check deliveryOption
         const parent = ctx?.parent;
         if (parent?.deliveryOption === 'deliverPickup') {
           return val && val.length >= 5;
         }
         return true;
       },
-      { message: 'Delivery address is required when delivery is selected' }
+      { message: 'Street address is required when delivery is selected' }
+    ),
+
+  deliveryCity: z.string()
+    .min(2, 'City must be at least 2 characters')
+    .max(100, 'City must be less than 100 characters')
+    .transform(sanitizeString)
+    .optional()
+    .refine(
+      (val, ctx) => {
+        const parent = ctx?.parent;
+        if (parent?.deliveryOption === 'deliverPickup') {
+          return val && val.length >= 2;
+        }
+        return true;
+      },
+      { message: 'City is required when delivery is selected' }
+    ),
+
+  deliveryState: z.string()
+    .optional()
+    .default('TX'),
+
+  deliveryZipcode: z.string()
+    .regex(/^\d{5}$/, 'Zipcode must be 5 digits')
+    .optional()
+    .refine(
+      (val, ctx) => {
+        const parent = ctx?.parent;
+        if (parent?.deliveryOption === 'deliverPickup') {
+          return val && /^\d{5}$/.test(val);
+        }
+        return true;
+      },
+      { message: 'Valid 5-digit zipcode is required when delivery is selected' }
     ),
 
   'trailer-use-reason': z.string().optional().transform(s => (s ? sanitizeString(s) : undefined)),

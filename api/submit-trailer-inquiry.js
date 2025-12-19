@@ -55,7 +55,10 @@ function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
             Math.sin(dLon / 2) * Math.sin(dLon / 2);
   
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = R * c;
+  const straightLineDistance = R * c;
+  
+  // Multiply by 1.4 to approximate actual road distance
+  const distance = straightLineDistance * 1.4;
   
   return Math.round(distance * 10) / 10; // Round to 1 decimal place
 }
@@ -133,11 +136,12 @@ function calculateRentalPrice(pickupDate, deliveryDate) {
 /**
  * Calculate delivery cost based on distance
  * @param {number} distanceMiles - Distance in miles
- * @returns {number} - Delivery cost ($2 per mile)
+ * @returns {number} - Delivery cost ($50 base fee + $2 per mile)
  */
 function calculateDeliveryCost(distanceMiles) {
+  const BASE_DELIVERY_FEE = 50;
   const DELIVERY_RATE_PER_MILE = 2;
-  return distanceMiles * DELIVERY_RATE_PER_MILE;
+  return BASE_DELIVERY_FEE + (distanceMiles * DELIVERY_RATE_PER_MILE);
 }
 
 // In-memory rate limiter
@@ -230,18 +234,27 @@ export default async function handler(request, response) {
     // Calculate rental pricing
     const pricingInfo = calculateRentalPrice(sanitizedData.pickupDate, sanitizedData.deliveryDate);
     
+    // Construct full delivery address if delivery is selected
+    let fullDeliveryAddress = null;
+    if (sanitizedData.deliveryOption === 'deliverPickup' && sanitizedData.deliveryStreet) {
+      fullDeliveryAddress = `${sanitizedData.deliveryStreet}, ${sanitizedData.deliveryCity}, ${sanitizedData.deliveryState} ${sanitizedData.deliveryZipcode}`;
+    }
+    
     // Calculate distance if delivery address is provided
     let distanceInfo = null;
     let deliveryCost = 0;
-    if (sanitizedData.deliveryOption === 'deliverPickup' && sanitizedData.deliveryAddress) {
-      distanceInfo = await calculateDistance(sanitizedData.deliveryAddress);
+    if (fullDeliveryAddress) {
+      distanceInfo = await calculateDistance(fullDeliveryAddress);
       if (distanceInfo) {
         deliveryCost = calculateDeliveryCost(distanceInfo.distanceMiles);
       }
     }
     
-    // Calculate total estimated price
-    const totalEstimatedPrice = pricingInfo.trailerCost + deliveryCost;
+    // Calculate subtotal, sales tax, and total estimated price
+    const subtotal = pricingInfo.trailerCost + deliveryCost;
+    const salesTaxRate = 0.0825; // Texas sales tax 8.25%
+    const salesTax = subtotal * salesTaxRate;
+    const totalEstimatedPrice = subtotal + salesTax;
 
     // Send email to owner
     try {
@@ -314,10 +327,10 @@ export default async function handler(request, response) {
                               <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🚚 Delivery</td>
                               <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">${sanitizedData.deliveryOption === 'ownTruck' ? 'Customer will pick up' : 'Delivery & pickup requested'}</td>
                             </tr>
-                            ${sanitizedData.deliveryAddress ? `
+                            ${fullDeliveryAddress ? `
                             <tr>
                               <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">📍 Delivery Address</td>
-                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">${sanitizedData.deliveryAddress}</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">${fullDeliveryAddress}</td>
                             </tr>
                             ` : ''}
                             ${distanceInfo ? `
@@ -325,7 +338,7 @@ export default async function handler(request, response) {
                               <td style="padding: 12px; background-color: #FFF9E6; font-weight: 600; border: 2px solid #FFC300; color: #333333;">📏 Distance</td>
                               <td style="padding: 12px; border: 2px solid #FFC300; background-color: #FFF9E6;">
                                 <strong style="color: #9B2226; font-size: 18px;">${distanceInfo.distanceMiles} miles</strong><br>
-                                <span style="color: #666; font-size: 13px;">From business location (straight line distance)</span>
+                                <span style="color: #666; font-size: 13px;">Estimated road distance from business location</span>
                               </td>
                             </tr>
                             ` : ''}
@@ -369,9 +382,17 @@ export default async function handler(request, response) {
                             ${deliveryCost > 0 ? `
                             <tr>
                               <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🚚 Delivery Cost</td>
-                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${deliveryCost.toFixed(2)} <span style="color: #666; font-size: 13px;">(${distanceInfo.distanceMiles} miles × $2/mile)</span></td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${deliveryCost.toFixed(2)} <span style="color: #666; font-size: 13px;">($50 base + ${distanceInfo.distanceMiles} mi × $2/mi)</span></td>
                             </tr>
                             ` : ''}
+                            <tr>
+                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">📊 Subtotal</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333; font-weight: 600;">$${subtotal.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🧾 Sales Tax (TX 8.25%)</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${salesTax.toFixed(2)}</td>
+                            </tr>
                             <tr>
                               <td style="padding: 12px; background-color: #9B2226; font-weight: 700; border: 2px solid #FFC300; color: #F4F1DE; font-size: 16px;">💵 TOTAL ESTIMATE</td>
                               <td style="padding: 12px; border: 2px solid #FFC300; background-color: #FFF9E6; font-weight: 700; font-size: 20px; color: #9B2226;">$${totalEstimatedPrice.toFixed(2)}</td>

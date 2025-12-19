@@ -1,5 +1,97 @@
 import { trailerInquirySchema } from '../src/js/trailer-schema.js';
 
+// Business address
+const BUSINESS_ADDRESS = '8637 Shadow Trace Dr, Fort Worth, Texas 76244, United States';
+
+/**
+ * Geocode an address using OpenStreetMap Nominatim API
+ * @param {string} address - Address to geocode
+ * @returns {Promise<{lat: number, lon: number}|null>}
+ */
+async function geocodeAddress(address) {
+  try {
+    const url = new URL('https://nominatim.openstreetmap.org/search');
+    url.searchParams.append('q', address);
+    url.searchParams.append('format', 'json');
+    url.searchParams.append('limit', '1');
+    
+    const response = await fetch(url.toString(), {
+      headers: {
+        'User-Agent': 'TexasToughRentals/1.0' // Required by Nominatim usage policy
+      }
+    });
+    
+    const data = await response.json();
+    
+    if (data && data.length > 0) {
+      return {
+        lat: parseFloat(data[0].lat),
+        lon: parseFloat(data[0].lon)
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Geocoding error:', error);
+    return null;
+  }
+}
+
+/**
+ * Calculate distance between two coordinates using Haversine formula
+ * @param {number} lat1 - Latitude of first point
+ * @param {number} lon1 - Longitude of first point
+ * @param {number} lat2 - Latitude of second point
+ * @param {number} lon2 - Longitude of second point
+ * @returns {number} - Distance in miles
+ */
+function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 3958.8; // Earth's radius in miles
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+  
+  return Math.round(distance * 10) / 10; // Round to 1 decimal place
+}
+
+/**
+ * Calculate distance from business address to delivery address
+ * @param {string} deliveryAddress - Customer's delivery address
+ * @returns {Promise<{distanceMiles: number}|null>}
+ */
+async function calculateDistance(deliveryAddress) {
+  try {
+    // Geocode both addresses
+    const [businessCoords, deliveryCoords] = await Promise.all([
+      geocodeAddress(BUSINESS_ADDRESS),
+      geocodeAddress(deliveryAddress)
+    ]);
+    
+    if (!businessCoords || !deliveryCoords) {
+      console.warn('Could not geocode one or both addresses');
+      return null;
+    }
+    
+    const distanceMiles = calculateHaversineDistance(
+      businessCoords.lat,
+      businessCoords.lon,
+      deliveryCoords.lat,
+      deliveryCoords.lon
+    );
+    
+    return { distanceMiles };
+  } catch (error) {
+    console.error('Distance calculation error:', error);
+    return null;
+  }
+}
+
 // In-memory rate limiter
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
@@ -87,6 +179,12 @@ export default async function handler(request, response) {
 
     const sanitizedData = validation.data;
 
+    // Calculate distance if delivery address is provided
+    let distanceInfo = null;
+    if (sanitizedData.deliveryOption === 'deliverPickup' && sanitizedData.deliveryAddress) {
+      distanceInfo = await calculateDistance(sanitizedData.deliveryAddress);
+    }
+
     // Send email to owner
     try {
       const ownerEmailPayload = {
@@ -158,6 +256,21 @@ export default async function handler(request, response) {
                               <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🚚 Delivery</td>
                               <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">${sanitizedData.deliveryOption === 'ownTruck' ? 'Customer will pick up' : 'Delivery & pickup requested'}</td>
                             </tr>
+                            ${sanitizedData.deliveryAddress ? `
+                            <tr>
+                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">📍 Delivery Address</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">${sanitizedData.deliveryAddress}</td>
+                            </tr>
+                            ` : ''}
+                            ${distanceInfo ? `
+                            <tr>
+                              <td style="padding: 12px; background-color: #FFF9E6; font-weight: 600; border: 2px solid #FFC300; color: #333333;">📏 Distance</td>
+                              <td style="padding: 12px; border: 2px solid #FFC300; background-color: #FFF9E6;">
+                                <strong style="color: #9B2226; font-size: 18px;">${distanceInfo.distanceMiles} miles</strong><br>
+                                <span style="color: #666; font-size: 13px;">From business location (straight line distance)</span>
+                              </td>
+                            </tr>
+                            ` : ''}
                             <tr>
                               <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🔧 Use Case</td>
                               <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">${sanitizedData['trailer-use-reason'] || 'N/A'}</td>

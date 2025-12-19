@@ -70,12 +70,12 @@
                             <img src="images/trailer-side.jpg" alt="14,000 lb dump trailer" class="w-full h-auto object-contain rounded-lg shadow-2xl">
                         </div>
                         <div class="p-8 flex flex-col md:w-1/2">
-                            <h3 class="text-3xl font-bold mb-4">14,000 LB DUMP TRAILER</h3>
+                            <h3 class="text-3xl font-bold mb-4">14,900 LB DUMP TRAILER</h3>
                             
                             <div class="mb-6">
                                 <h4 class="font-bold text-lg uppercase mb-3 tracking-wider">Features</h4>
                                 <ul class="text-charcoal/90 space-y-2">
-                                    <li class="flex items-center"><span class="material-symbols-outlined text-rustic-red mr-2">check_circle</span>14,000 lb. GVWR</li>
+                                    <li class="flex items-center"><span class="material-symbols-outlined text-rustic-red mr-2">check_circle</span>14,900 lb. GVWR</li>
                                     <li class="flex items-center"><span class="material-symbols-outlined text-rustic-red mr-2">check_circle</span>Hydraulic dump</li>
                                     <li class="flex items-center"><span class="material-symbols-outlined text-rustic-red mr-2">check_circle</span>Aluminum ramps</li>
                                 </ul>
@@ -84,10 +84,10 @@
                             <div class="mb-8">
                                 <h4 class="font-bold text-lg uppercase mb-3 tracking-wider">Pricing</h4>
                                 <div class="space-y-2">
-                                    <p><strong>1-2 Day Rental:</strong> $150 per day</p>
-                                    <p><strong>3-6 Day Rental:</strong> $125 per day</p>
-                                    <p><strong>7-29 Day Rental:</strong> $110 per day</p>
-                                    <p><strong>30+ Day Rental:</strong> $85 per day</p>
+                                    <p><strong>1 Day Rental:</strong> $130 per day</p>
+                                    <p><strong>2-6 Day Rental:</strong> $95 per day</p>
+                                    <p><strong>7-29 Day Rental:</strong> $85 per day</p>
+                                    <p><strong>30+ Day Rental:</strong> $70 per day</p>
                                 </div>
                             </div>
                             
@@ -202,6 +202,17 @@
                                 Please deliver and pick up the trailer
                             </label>
                         </div>
+                    </div>
+
+                    <div id="deliveryAddressField" class="form-group mb-4" style="display: none;">
+                        <label for="deliveryAddress" class="block font-semibold mb-1">
+                            <span class="material-symbols-outlined align-middle mr-1">location_on</span>
+                            Delivery Address <span class="text-rustic-red">*</span>
+                        </label>
+                        <input type="text" id="deliveryAddress" name="deliveryAddress" 
+                            placeholder="123 Main St, City, TX 12345"
+                            class="w-full px-4 py-3 rounded-md border border-charcoal/20 bg-white focus:ring-2 focus:ring-construction-yellow focus:border-transparent transition-all duration-200 shadow-sm focus:shadow-md">
+                        <div class="form-error text-red-500 text-sm mt-1" id="deliveryAddressError"></div>
                     </div>
 
                     <div class="form-group mb-4">
@@ -331,6 +342,24 @@
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
+            });
+        });
+
+        // Delivery address field toggle
+        const deliveryRadios = document.querySelectorAll('input[name="deliveryOption"]');
+        const deliveryAddressField = document.getElementById('deliveryAddressField');
+        const deliveryAddressInput = document.getElementById('deliveryAddress');
+
+        deliveryRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'deliverPickup') {
+                    deliveryAddressField.style.display = 'block';
+                    deliveryAddressInput.required = true;
+                } else {
+                    deliveryAddressField.style.display = 'none';
+                    deliveryAddressInput.required = false;
+                    deliveryAddressInput.value = '';
+                }
             });
         });
     </script>

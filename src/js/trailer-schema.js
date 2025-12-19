@@ -51,6 +51,23 @@ export const trailerInquirySchema = z.object({
     errorMap: () => ({ message: 'Please select a delivery option.' })
   }),
 
+  deliveryAddress: z.string()
+    .min(5, 'Delivery address must be at least 5 characters')
+    .max(200, 'Delivery address must be less than 200 characters')
+    .transform(sanitizeString)
+    .optional()
+    .refine(
+      (val, ctx) => {
+        // Get the parent object to check deliveryOption
+        const parent = ctx?.parent;
+        if (parent?.deliveryOption === 'deliverPickup') {
+          return val && val.length >= 5;
+        }
+        return true;
+      },
+      { message: 'Delivery address is required when delivery is selected' }
+    ),
+
   'trailer-use-reason': z.string().optional().transform(s => (s ? sanitizeString(s) : undefined)),
 
   pickupDate: z.string()

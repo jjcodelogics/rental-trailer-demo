@@ -3,13 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trailer Rental | Texas Tough Rentals</title>
-    <link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png">
-    <link rel="stylesheet" href="/src/css/style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <title>14k Dump Trailer Specs & Pricing | $130/Day | Texas Tough Rentals</title>
+    <meta name="description" content="Heavy-duty 14,000 lb dump trailer specs & rental pricing. Hydraulic lift, spreader gate. $130/day in Keller TX. Perfect for construction & gravel delivery.">
+    <link rel="icon" type="image/png" href="src/assets/images/favicons/favicons/favicon-32x32.png">
     
-    <!-- Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.vercel-insights.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- Fonts - Optimized Loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    
+    <!-- Material Icons - Async Loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"></noscript>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/css/style.css">
+    
+    <!-- Flatpickr CSS - Deferred -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"></noscript>
     
     <!-- Vercel Analytics -->
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
@@ -19,13 +36,66 @@
       import { injectSpeedInsights } from 'https://cdn.jsdelivr.net/npm/@vercel/speed-insights@1.3.1/+esm';
       injectSpeedInsights();
     </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://texastoughrentals.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "14k Dump Trailer Rental",
+          "item": "https://texastoughrentals.com/trailer.html"
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "14,900 lb Dump Trailer Rental",
+      "image": "https://texastoughrentals.com/images/trailer-side.jpg",
+      "description": "Heavy-duty 14k dump trailer for rent in Keller, Fort Worth, and Southlake. Perfect for construction, gravel delivery, and debris removal.",
+      "brand": {
+        "@type": "Brand",
+        "name": "Texas Tough Rentals"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "lowPrice": "70",
+        "highPrice": "130",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "LocalBusiness",
+          "name": "Texas Tough Rentals"
+        }
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "3"
+      }
+    }
+    </script>
 </head>
 <body class="bg-faded-cream">
 
     <header>
         <div class="nav-bar fixed top-0 w-full bg-charcoal shadow-lg z-50 border-b-[3px] border-rustic-red flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
             <a href="/" class="nav-logo">
-                <img src="images/logo.jpg" alt="Texas Tough Rentals logo" class="h-16 hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                <picture>
+                    <source srcset="src/assets/images/branding/logo.webp" type="image/webp">
+                    <img src="src/assets/images/branding/logo.jpg" alt="Texas Tough Rentals logo" class="h-16 hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                </picture>
             </a>
             <nav id="nav-menu" class="hidden lg:flex flex-1 justify-end items-center gap-8">
                 <ul class="flex space-x-8 text-faded-cream font-body font-semibold uppercase text-sm items-center">
@@ -56,21 +126,25 @@
             </div>
         </section>
 
-        <section id="hero-cta" class="page-banner relative bg-cover bg-center text-white py-24" style="background-image: url('images/trailer-side.jpg');">
+        <section id="hero-cta" class="page-banner relative bg-cover bg-center text-white py-24" style="background-image: url('src/assets/images/trailers/trailer-side.jpg');">
             <div class="absolute inset-0 bg-black opacity-50"></div>
             <div class="container mx-auto relative z-10 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold uppercase">Trailer Rental</h2>
+                <h1 class="text-4xl md:text-5xl font-bold uppercase">14k Dump Trailer Rental Keller TX</h1>
             </div>
         </section>
 
         <section id="trailers" class="section">
             <div class="container mx-auto">
-                <h2 class="section-title">Featured Trailers</h2>
+                <h2 class="section-title">Heavy-Duty Dump Trailer for Rent</h2>
+                <p class="text-center text-charcoal/80 mb-8 max-w-3xl mx-auto">Our <strong>14,900 lb dump trailer</strong> is perfect for <a href="index.html" class="text-rustic-red font-semibold hover:underline">construction projects in Keller</a>, gravel delivery, and debris removal throughout Fort Worth and Southlake.</p>
                 <div class="flex justify-center">
                     <!-- Trailer Card -->
                     <div class="trailer-card flex flex-col md:flex-row max-w-4xl">
                         <div class="md:w-1/2 p-4 flex items-center justify-center bg-gradient-to-br from-charcoal/5 to-charcoal/10">
-                            <img src="images/trailer-side.jpg" alt="14,000 lb dump trailer" class="w-full h-auto object-contain rounded-lg shadow-2xl">
+                            <picture>
+                                <source srcset="src/assets/images/trailers/trailer-side.webp" type="image/webp">
+                                <img src="src/assets/images/trailers/trailer-side.jpg" alt="14,000 lb heavy duty dump trailer rental available in Keller Fort Worth Texas" width="600" height="450" loading="eager" class="w-full h-auto object-contain rounded-lg shadow-2xl">
+                            </picture>
                         </div>
                         <div class="p-8 flex flex-col md:w-1/2">
                             <h3 class="text-3xl font-bold mb-4">14,900 LB DUMP TRAILER</h3>
@@ -92,6 +166,7 @@
                                     <p><strong>7-29 Day Rental:</strong> $85 per day</p>
                                     <p><strong>30+ Day Rental:</strong> $70 per day</p>
                                 </div>
+                                <p class="text-sm text-charcoal/70 mt-3">Serving <a href="index.html#service-area" class="text-rustic-red hover:underline">Keller, Fort Worth, Southlake and surrounding areas</a> with delivery available.</p>
                             </div>
                             
                             <div class="mt-auto text-center">
@@ -106,7 +181,7 @@
         <section id="documents" class="section bg-charcoal text-faded-cream">
             <div class="container mx-auto text-center">
                 <h2 class="section-title text-faded-cream">Rental Documents</h2>
-                <p class="section-subtitle text-faded-cream/80">Please be sure to review the below documents before requesting a rental.</p>
+                <p class="section-subtitle text-faded-cream/80">Please be sure to review the below documents before requesting a <a href="index.html" class="text-construction-yellow hover:underline">dump trailer rental in Keller TX</a>.</p>
                 <div class="mt-8">
                     <div class="document-box">
                         <span class="document-title text-lg font-semibold mb-4 sm:mb-0 sm:mr-8">Trailer Liability Information</span>
@@ -333,7 +408,7 @@
 
     <footer class="bg-charcoal border-t-[3px] border-rustic-red py-8">
         <div class="container mx-auto text-center text-faded-cream">
-            <img src="images/logo.jpg" alt="Texas Tough Rentals logo" class="footer-logo">
+            <img src="src/assets/images/branding/logo.jpg" alt="Texas Tough Rentals logo" class="footer-logo">
             <p>&copy; 2025 Texas Tough Rentals. All Rights Reserved.</p>
         </div>
     </footer>
@@ -344,96 +419,10 @@
         </a>
     </div>
 
-    <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu');
-        const mobileNav = document.getElementById('mobile-nav');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-          mobileNav.classList.toggle('hidden');
-        });
-        
-        // Close mobile menu when clicking a link
-        mobileNav.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', () => {
-            mobileNav.classList.add('hidden');
-          });
-        });
-
-        // Back to top button visibility
-        const backToTopBtn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.remove('hidden');
-            } else {
-                backToTopBtn.classList.add('hidden');
-            }
-        });
-
-        // Smooth scroll for back-to-top
-        document.querySelector('a[href="#top"]').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Delivery address field toggle
-        const deliveryRadios = document.querySelectorAll('input[name="deliveryOption"]');
-        const deliveryAddressField = document.getElementById('deliveryAddressField');
-        const deliveryStreetInput = document.getElementById('deliveryStreet');
-        const deliveryCityInput = document.getElementById('deliveryCity');
-        const deliveryZipcodeInput = document.getElementById('deliveryZipcode');
-
-        deliveryRadios.forEach(radio => {
-            radio.addEventListener('change', function() {
-                if (this.value === 'deliverPickup') {
-                    deliveryAddressField.style.display = 'block';
-                    deliveryStreetInput.required = true;
-                    deliveryCityInput.required = true;
-                    deliveryZipcodeInput.required = true;
-                } else {
-                    deliveryAddressField.style.display = 'none';
-                    deliveryStreetInput.required = false;
-                    deliveryCityInput.required = false;
-                    deliveryZipcodeInput.required = false;
-                    deliveryStreetInput.value = '';
-                    deliveryCityInput.value = '';
-                    deliveryZipcodeInput.value = '';
-                }
-            });
-        });
-    </script>
-    
     <!-- Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        // Initialize Flatpickr for date range picker
-        flatpickr("#dateRange", {
-            mode: "range",
-            minDate: "today",
-            dateFormat: "Y-m-d",
-            onChange: function(selectedDates, dateStr, instance) {
-                if (selectedDates.length === 2) {
-                    // Set the hidden input values
-                    document.getElementById('pickupDate').value = selectedDates[0].toISOString();
-                    document.getElementById('deliveryDate').value = selectedDates[1].toISOString();
-                    
-                    // Clear any error
-                    document.getElementById('dateRangeError').textContent = '';
-                }
-            },
-            onClose: function(selectedDates, dateStr, instance) {
-                // Validate that both dates are selected
-                if (selectedDates.length < 2) {
-                    document.getElementById('dateRangeError').textContent = 'Please select both pickup and drop-off dates';
-                }
-            }
-        });
-    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
-    <!-- Zod Import Map and Form Handler -->
+    <!-- Zod Import Map -->
     <script type="importmap">
     {
       "imports": {
@@ -441,9 +430,88 @@
       }
     }
     </script>
+    
+    <!-- Modularized Scripts -->
     <script type="module">
-        import { handleInquiryForm } from '/src/js/form-handler.js';
-        document.addEventListener('DOMContentLoaded', handleInquiryForm);
+        import { initMobileMenu } from '/src/js/components/mobile-menu.js';
+        import { initBackToTop } from '/src/js/components/back-to-top.js';
+        import { initDeliveryOption } from '/src/js/components/delivery-option.js';
+        import { initDatePicker } from '/src/js/components/date-picker.js';
+        import { handleInquiryForm } from '/src/js/utils/api/form-handler.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initMobileMenu();
+            initBackToTop();
+            initDeliveryOption();
+            handleInquiryForm();
+            // Wait for flatpickr to load before initializing
+            if (typeof flatpickr !== 'undefined') {
+                initDatePicker();
+            } else {
+                window.addEventListener('load', initDatePicker);
+            }
+        });
     </script>
+
+    <!--
+    ===============================================
+    BACKLINK OPPORTUNITIES FOR TRAILER PAGE
+    ===============================================
+    
+    Target these high-value backlink opportunities to boost local SEO rankings for "dump trailer rental Keller TX":
+    
+    1. LOCAL BUSINESS DIRECTORIES:
+       - Google Business Profile (claim and optimize with 14k dump trailer photos)
+       - Yelp for Trailer Rentals
+       - Thumbtack - Equipment Rental category
+       - Angi (formerly Angie's List)
+       - HomeAdvisor Contractor Resources
+       - Nextdoor Business Pages (Keller, Fort Worth, Southlake neighborhoods)
+    
+    2. CONSTRUCTION & CONTRACTOR PARTNERSHIPS:
+       - Local roofing companies (offer referral discounts)
+       - Landscaping businesses in Tarrant County
+       - Home renovation contractors
+       - Demolition services
+       - Concrete contractors
+       - General contractors associations
+    
+    3. EQUIPMENT RENTAL INDUSTRY:
+       - Equipment Rental Directory listings
+       - American Rental Association (ARA) member directory
+       - BigRentz partner network
+       - United Rentals vendor directory
+       - Sunbelt Rentals complementary services
+    
+    4. LOCAL BLOGS & MEDIA:
+       - Fort Worth Star-Telegram local business spotlight
+       - Keller Citizen newspaper
+       - Texas Home Improvement blogs
+       - DFW construction forums
+       - Local real estate investor blogs
+    
+    5. COMMUNITY & SPONSORSHIPS:
+       - Keller Chamber of Commerce member directory
+       - Local charity events (sponsor with trailer rental donations)
+       - High school sports teams sponsorship
+       - Community cleanup events
+       - Habitat for Humanity local chapter
+    
+    6. SOCIAL PROOF & REVIEWS:
+       - Facebook Business Page reviews
+       - Google Maps reviews with photos
+       - TrustPilot business profile
+       - Better Business Bureau listing
+    
+    ANCHOR TEXT STRATEGY:
+    - Primary: "14k dump trailer rental Keller TX"
+    - Secondary: "dump trailer rentals Fort Worth", "heavy-duty trailer rental"
+    - Brand: "Texas Tough Rentals"
+    
+    CONTENT COLLABORATION IDEAS:
+    - Guest post: "5 Projects Where a 14k Dump Trailer Saves You Money"
+    - Infographic: "Choosing the Right Dump Trailer Size for Your Project"
+    - Video: "How to Safely Load and Operate a 14k Dump Trailer"
+    -->
 </body>
 </html>

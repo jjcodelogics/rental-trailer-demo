@@ -1,5 +1,5 @@
 /* Texas Tough Rentals - Tailwind CSS */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonts are now loaded in HTML head for better performance */
 
 @tailwind base;
 @tailwind components;

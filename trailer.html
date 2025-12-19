@@ -122,11 +122,6 @@
                 <a href="tel:+1 682-233-4986" class="text-rustic-red font-semibold hover:underline">+1 682-233-4986</a>.
             </p>
 
-            <div class="form-success bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6"
-                id="successMessage" style="display:none;">
-                <strong>Success!</strong> We've sent you a confirmation email. Please check your inbox and spam folder.
-            </div>
-
             <form id="inquiryForm" novalidate class="rental-form space-y-6">
                 <fieldset>
                     <legend class="sr-only">Rental Request Form</legend>
@@ -294,6 +289,12 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary w-full mb-2">Submit Inquiry</button>
+                    
+                    <div class="form-success bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4"
+                        id="successMessage" style="display:none;">
+                        <strong>Success!</strong> We've sent you a confirmation email. Please check your inbox and spam folder.
+                    </div>
+                    
                     <span class="disclaimer block text-sm text-charcoal/60 mt-2">* = Required Fields</span>
                 </fieldset>
             </form>

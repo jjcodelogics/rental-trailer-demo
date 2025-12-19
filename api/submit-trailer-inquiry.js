@@ -384,6 +384,16 @@ export default async function handler(request, response) {
                             </p>
                           </div>
                           
+                          <div style="margin-top: 30px; text-align: center;">
+                            <a href="${process.env.BASE_URL || 'https://texastoughrentals.com'}/confirm-booking.html?name=${encodeURIComponent(sanitizedData.name)}&email=${encodeURIComponent(sanitizedData.email)}&trailer=${encodeURIComponent(sanitizedData['trailer-select'])}&pickup=${encodeURIComponent(sanitizedData.pickupDate)}&delivery=${encodeURIComponent(sanitizedData.deliveryDate)}" 
+                               style="display: inline-block; background-color: #22C55E; color: white; padding: 15px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; text-transform: uppercase; font-family: 'Oswald', 'Arial Black', sans-serif; letter-spacing: 1px; box-shadow: 0 4px 6px rgba(34, 197, 94, 0.3); border: 2px solid #16A34A;">
+                              ✅ Confirm Booking
+                            </a>
+                            <p style="margin: 15px 0 0 0; color: #666; font-size: 13px;">
+                              Click this button to automatically send an acceptance email to the customer
+                            </p>
+                          </div>
+                          
                           <div style="margin-top: 30px; padding: 20px; background-color: #FFF9E6; border-left: 4px solid #FFC300; border-radius: 4px;">
                             <p style="margin: 0; color: #333333; font-size: 14px;">
                               <strong>⏰ Action Required:</strong> Please respond to this inquiry within 1-2 business days.

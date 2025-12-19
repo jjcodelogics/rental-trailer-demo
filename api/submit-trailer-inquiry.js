@@ -379,10 +379,10 @@ export default async function handler(request, response) {
                               <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🚛 Trailer Rental Cost</td>
                               <td style="padding: 12px; border: 1px solid #ddd; color: #333333; font-weight: 600;">$${pricingInfo.trailerCost.toFixed(2)}</td>
                             </tr>
-                            ${deliveryCost > 0 ? `
+                            ${sanitizedData.deliveryOption === 'deliverPickup' ? `
                             <tr>
                               <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🚚 Delivery Cost</td>
-                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${deliveryCost.toFixed(2)} <span style="color: #666; font-size: 13px;">($50 base + ${distanceInfo.distanceMiles} mi × $2/mi)</span></td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${deliveryCost.toFixed(2)}${distanceInfo ? ` <span style="color: #666; font-size: 13px;">($50 base + ${distanceInfo.distanceMiles} mi × $2/mi)</span>` : ' <span style="color: #666; font-size: 13px;">(Pending distance calculation)</span>'}</td>
                             </tr>
                             ` : ''}
                             <tr>

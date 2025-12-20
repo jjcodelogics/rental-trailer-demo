@@ -1,3 +1,25 @@
+/**
+ * Confirm Booking API Handler
+ * Sends booking confirmation email to customer after rental request is accepted
+ * 
+ * @module api/handlers/confirm-booking
+ * @requires process.env.BREVO_API_KEY - Brevo email service API key
+ * @requires process.env.EMAIL_SENDER - Verified sender email address
+ * 
+ * @endpoint POST /api/confirm-booking
+ * @param {Object} request.body - Request payload
+ * @param {string} request.body.customerName - Customer's full name
+ * @param {string} request.body.customerEmail - Customer's email address
+ * @param {string} request.body.trailerName - Name of the trailer being rented
+ * @param {string} request.body.pickupDate - Pickup date/time (ISO format)
+ * @param {string} request.body.deliveryDate - Delivery date/time (ISO format)
+ * 
+ * @returns {Object} JSON response with success status
+ * @returns {number} 200 - Booking confirmation sent successfully
+ * @returns {number} 400 - Missing required fields
+ * @returns {number} 405 - Method not allowed (only POST accepted)
+ * @returns {number} 500 - Server error or email service misconfiguration
+ */
 export default async function handler(request, response) {
   // Only accept POST requests
   if (request.method !== 'POST') {
@@ -21,7 +43,7 @@ export default async function handler(request, response) {
       });
     }
 
-    // Format dates
+    // Format dates for human-readable display
     const formattedPickup = new Date(pickupDate).toLocaleString('en-US', { 
       dateStyle: 'full', 
       timeStyle: 'short' 

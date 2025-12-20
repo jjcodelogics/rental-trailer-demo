@@ -1,14 +1,38 @@
-/* Texas Tough Rentals - Tailwind CSS */
-/* Fonts are now loaded in HTML head for better performance */
+/**
+ * Texas Tough Rentals - Main Stylesheet
+ * 
+ * This stylesheet uses Tailwind CSS with custom components and utilities.
+ * Custom color palette and typography are defined in tailwind.config.js
+ * 
+ * @module css/style
+ * @requires tailwindcss
+ * 
+ * Color Palette:
+ * - Charcoal (#333333): Primary text
+ * - Rustic Red (#9B2226): Brand accent
+ * - Construction Yellow (#FFC300): CTAs
+ * - Faded Cream (#F4F1DE): Background
+ * 
+ * Typography:
+ * - Headings: Oswald (Bold, Uppercase)
+ * - Body: Inter (Clean, Readable)
+ */
+
+/* Fonts are loaded in HTML head for better performance */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html, body {
+    @apply overflow-x-hidden;
+  }
+  
   body {
     font-family: 'Inter', sans-serif;
     @apply text-charcoal bg-faded-cream;
+    max-width: 100vw;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -16,9 +40,28 @@
     font-weight: 700;
     text-transform: uppercase;
   }
+  
+  /* Ensure all images are responsive by default */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 @layer components {
+  /* Prevent zoom on mobile inputs while maintaining accessibility */
+  @media screen and (max-width: 640px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="datetime-local"],
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+  
   .btn {
     @apply inline-block px-8 py-3 rounded-md text-lg font-semibold uppercase tracking-wide transition-all duration-300 shadow-md;
   }

@@ -1,6 +1,33 @@
+/**
+ * Submit Trailer Inquiry API Handler
+ * Processes customer trailer rental inquiries with validation, rate limiting, and email notifications
+ * 
+ * @module api/handlers/submit-trailer-inquiry
+ * @requires ../src/js/trailer-schema - Zod validation schema
+ * @requires process.env.BREVO_API_KEY - Brevo email service API key
+ * @requires process.env.EMAIL_SENDER - Verified sender email address
+ * @requires process.env.EMAIL_OWNER - Business owner's email address
+ * 
+ * @endpoint POST /api/submit-trailer-inquiry
+ * 
+ * Features:
+ * - Input validation and sanitization using Zod
+ * - IP-based rate limiting (5 requests per hour)
+ * - Distance calculation for delivery quotes
+ * - Dual email notifications (customer + owner)
+ * - Geocoding with OpenStreetMap Nominatim API
+ * 
+ * @param {Object} request.body - Rental inquiry data
+ * @returns {Object} JSON response with success status and optional quote details
+ * @returns {number} 200 - Inquiry processed successfully
+ * @returns {number} 400 - Validation error or bad request
+ * @returns {number} 429 - Rate limit exceeded
+ * @returns {number} 500 - Server error
+ */
+
 import { trailerInquirySchema } from '../src/js/trailer-schema.js';
 
-// Business address - simplified format for better geocoding
+// Business address - simplified format for better geocoding accuracy
 const BUSINESS_ADDRESS = '8637 Shadow Trace Dr, Fort Worth, TX 76244';
 
 /**

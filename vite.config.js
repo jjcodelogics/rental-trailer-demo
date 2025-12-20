@@ -1,3 +1,11 @@
+/**
+ * Vite Configuration
+ * Defines build settings, optimization, and development server configuration
+ * 
+ * @module vite.config
+ * @see https://vitejs.dev/config/
+ */
+
 import { defineConfig } from 'vite';
 import path from 'path';
 
@@ -9,12 +17,12 @@ export default defineConfig({
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log']
+        drop_console: true,      // Remove console.log in production
+        drop_debugger: true,     // Remove debugger statements
+        pure_funcs: ['console.log']  // Treat console.log as pure function for removal
       },
       format: {
-        comments: false
+        comments: false  // Remove comments from production build
       }
     },
     rollupOptions: {

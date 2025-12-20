@@ -1,6 +1,28 @@
-// Shared Schema.org structured data
+/**
+ * Structured Data (Schema.org JSON-LD)
+ * Provides SEO-friendly structured data for search engines
+ * 
+ * @module structured-data
+ * @requires ./config
+ * @see https://schema.org/
+ * @see https://developers.google.com/search/docs/appearance/structured-data
+ */
+
 import { businessConfig } from './config.js';
 
+/**
+ * Local Business Schema
+ * Defines business information in Schema.org format
+ * 
+ * @type {Object}
+ * @property {string} @context - Schema.org context
+ * @property {string} @type - Schema type (LocalBusiness)
+ * @property {string} name - Business name
+ * @property {Object} address - Postal address details
+ * @property {Object} geo - Geographic coordinates
+ * @property {Object} openingHoursSpecification - Operating hours
+ * @property {Object} aggregateRating - Customer ratings
+ */
 export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",

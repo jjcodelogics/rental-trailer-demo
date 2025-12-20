@@ -1,4 +1,24 @@
-// Business configuration - shared across all pages
+/**
+ * Business Configuration
+ * Central configuration object shared across all pages
+ * Contains business information, contact details, and branding
+ * 
+ * @module config/config
+ * @constant {Object} businessConfig
+ */
+
+/**
+ * Business configuration object
+ * @type {Object}
+ * @property {string} name - Business name
+ * @property {string} phone - Formatted phone number for display
+ * @property {string} phoneRaw - Raw phone number in E.164 format
+ * @property {Object} address - Business address details
+ * @property {Object} location - GPS coordinates
+ * @property {string[]} serviceArea - List of cities served
+ * @property {Object} social - Social media and map links
+ * @property {string} siteUrl - Production website URL
+ */
 export const businessConfig = {
   name: 'Texas Tough Rentals',
   phone: '(682) 233-4986',

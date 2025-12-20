@@ -360,7 +360,7 @@
                         <div class="form-error text-red-500 text-sm mt-1" id="additionalInfoError"></div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-full mb-2">Reserve My Dates</button>
+                    <button type="submit" class="btn btn-primary w-full mb-2">Request these dates</button>
                     
                     <div class="form-success bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mt-4"
                         id="successMessage" style="display:none;">
@@ -420,7 +420,7 @@
     </div>
 
     <!-- Flatpickr JS -->
-    <script defer src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
     <!-- Zod Import Map -->
     <script type="importmap">
@@ -439,17 +439,31 @@
         import { initDatePicker } from '/src/js/components/date-picker.js';
         import { handleInquiryForm } from '/src/js/utils/api/form-handler.js';
         
-        document.addEventListener('DOMContentLoaded', () => {
+        // Function to wait for flatpickr to be available
+        function waitForFlatpickr() {
+            return new Promise((resolve) => {
+                if (typeof flatpickr !== 'undefined') {
+                    resolve();
+                } else {
+                    const checkInterval = setInterval(() => {
+                        if (typeof flatpickr !== 'undefined') {
+                            clearInterval(checkInterval);
+                            resolve();
+                        }
+                    }, 50);
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', async () => {
             initMobileMenu();
             initBackToTop();
             initDeliveryOption();
             handleInquiryForm();
+            
             // Wait for flatpickr to load before initializing
-            if (typeof flatpickr !== 'undefined') {
-                initDatePicker();
-            } else {
-                window.addEventListener('load', initDatePicker);
-            }
+            await waitForFlatpickr();
+            initDatePicker();
         });
     </script>
 

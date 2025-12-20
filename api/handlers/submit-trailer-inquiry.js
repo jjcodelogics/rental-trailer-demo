@@ -241,6 +241,23 @@ export default async function handler(request, response) {
     // Calculate rental pricing
     const pricingInfo = calculateRentalPrice(sanitizedData.pickupDate, sanitizedData.deliveryDate);
     
+    // Validate maximum rental duration
+    const MAX_RENTAL_DAYS = 365;
+    if (pricingInfo.days > MAX_RENTAL_DAYS) {
+      return response.status(400).json({ 
+        success: false, 
+        message: `Maximum rental period is ${MAX_RENTAL_DAYS} days` 
+      });
+    }
+    
+    // Validate minimum rental duration
+    if (pricingInfo.days < 1) {
+      return response.status(400).json({ 
+        success: false, 
+        message: 'Drop-off date must be after pickup date' 
+      });
+    }
+    
     // Construct full delivery address if delivery is selected
     let fullDeliveryAddress = null;
     if (sanitizedData.deliveryOption === 'deliverPickup' && sanitizedData.deliveryStreet) {

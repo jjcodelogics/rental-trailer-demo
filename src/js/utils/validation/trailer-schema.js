@@ -43,7 +43,7 @@ export const trailerInquirySchema = z.object({
     .optional()
     .transform(s => (s ? sanitizeString(s) : undefined)),
 
-  'trailer-select': z.enum(['14000-lb-dump-trailer'], {
+  'trailer-select': z.enum(['14900-lbs-dump-trailer'], {
     errorMap: () => ({ message: 'Invalid trailer selection.' })
   }),
 

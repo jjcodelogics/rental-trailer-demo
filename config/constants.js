@@ -23,8 +23,8 @@ export const BUSINESS_CONFIG = {
 };
 
 export const TRAILER_CONFIG = {
-  name: '14,900 lb Dump Trailer',
-  shortName: '14k Dump Trailer',
+  name: '14,900 lbs Dump Trailer',
+  shortName: '14,900 lbs Dump Trailer',
   capacity: 14900,
   pricing: {
     halfDay: 70,

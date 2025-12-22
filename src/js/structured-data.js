@@ -99,8 +99,8 @@ export const serviceSchema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Product",
-          "name": "14,000 lb Dump Trailer - 1 Day Rental",
-          "description": "Heavy-duty 14k dump trailer rental for construction, gravel delivery, and cleanups"
+          "name": "14,900 lbs Dump Trailer - 1 Day Rental",
+          "description": "Heavy-duty 14,900 lbs dump trailer rental for construction, gravel delivery, and cleanups"
         },
         "price": "130",
         "priceCurrency": "USD"
@@ -109,8 +109,8 @@ export const serviceSchema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Product",
-          "name": "14,000 lb Dump Trailer - 2-6 Day Rental",
-          "description": "Heavy-duty 14k dump trailer rental for extended projects"
+          "name": "14,900 lbs Dump Trailer - 2-6 Day Rental",
+          "description": "Heavy-duty 14,900 lbs dump trailer rental for extended projects"
         },
         "price": "95",
         "priceCurrency": "USD"

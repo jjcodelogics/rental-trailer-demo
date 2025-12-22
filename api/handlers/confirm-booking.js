@@ -88,7 +88,7 @@ export default async function handler(request, response) {
                           </h1>
                         </div>
                         <p style="color: #FFC300; margin: 10px 0 0 0; font-size: 16px; font-weight: 600; letter-spacing: 2px;">
-                          ⚡ BUILT FOR THE TOUGH JOBS! ⚡
+                          TOUGH BY DEFAULT
                         </p>
                       </td>
                     </tr>
@@ -139,6 +139,9 @@ export default async function handler(request, response) {
                           </p>
                           <p style="margin: 5px 0; color: #555; font-size: 14px;">
                             <strong>Drop-off:</strong> ${formattedDelivery}
+                          </p>
+                          <p style="margin: 5px 0; color: #555; font-size: 14px;">
+                            <strong>Pickup Location:</strong> Walmart parking lot, 5336 Golden Triangle Blvd, Fort Worth, TX 76244
                           </p>
                         </div>
                         

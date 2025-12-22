@@ -170,12 +170,15 @@ function calculateRentalPrice(pickupDate, deliveryDate) {
 /**
  * Calculate delivery cost based on distance
  * @param {number} distanceMiles - Distance in miles
- * @returns {number} - Delivery cost ($50 base fee + $2 per mile)
+ * @returns {number} - Delivery cost (0-20 miles: $150 flat fee, 20+ miles: $3.50 per mile roundtrip)
  */
 function calculateDeliveryCost(distanceMiles) {
-  const BASE_DELIVERY_FEE = 50;
-  const DELIVERY_RATE_PER_MILE = 2;
-  return BASE_DELIVERY_FEE + (distanceMiles * DELIVERY_RATE_PER_MILE);
+  if (distanceMiles <= 20) {
+    return 150; // Flat fee for 0-20 miles
+  } else {
+    // For 20+ miles: $3.50 per mile roundtrip (distance * 2 for roundtrip * $3.50)
+    return distanceMiles * 2 * 3.50;
+  }
 }
 
 // In-memory rate limiter
@@ -301,11 +304,8 @@ export default async function handler(request, response) {
       }
     }
     
-    // Calculate subtotal, sales tax, and total estimated price
-    const subtotal = pricingInfo.trailerCost + deliveryCost;
-    const salesTaxRate = 0.0825; // Texas sales tax 8.25%
-    const salesTax = subtotal * salesTaxRate;
-    const totalEstimatedPrice = subtotal + salesTax;
+    // Calculate total estimated price (no tax)
+    const totalEstimatedPrice = pricingInfo.trailerCost + deliveryCost;
 
     // Send email to owner
     try {
@@ -338,7 +338,7 @@ export default async function handler(request, response) {
                           <h1 style="color: #FFC300; margin: 0; font-size: 28px; font-weight: 700; text-transform: uppercase; font-family: 'Oswald', 'Arial Black', sans-serif; letter-spacing: 1px;">
                             ⚡ New Inquiry Alert!
                           </h1>
-                          <p style="color: #F4F1DE; margin: 10px 0 0 0; font-size: 14px;">You have a new trailer rental request</p>
+                          <p style="color: #F4F1DE; margin: 10px 0 0 0; font-size: 14px;">Tough By Default</p>
                         </td>
                       </tr>
                       
@@ -433,17 +433,9 @@ export default async function handler(request, response) {
                             ${sanitizedData.deliveryOption === 'deliverPickup' ? `
                             <tr>
                               <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🚚 Delivery Cost</td>
-                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${deliveryCost.toFixed(2)}${distanceInfo ? ` <span style="color: #666; font-size: 13px;">($50 base + ${distanceInfo.distanceMiles} mi × $2/mi)</span>` : ' <span style="color: #666; font-size: 13px;">(Pending distance calculation)</span>'}</td>
+                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${deliveryCost.toFixed(2)}${distanceInfo ? ` <span style="color: #666; font-size: 13px;">(${distanceInfo.distanceMiles <= 20 ? '0-20 mi flat fee' : `${distanceInfo.distanceMiles} mi × 2 (roundtrip) × $3.50/mi`})</span>` : ' <span style="color: #666; font-size: 13px;">(Pending distance calculation)</span>'}</td>
                             </tr>
                             ` : ''}
-                            <tr>
-                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">📊 Subtotal</td>
-                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333; font-weight: 600;">$${subtotal.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                              <td style="padding: 12px; background-color: #F4F1DE; font-weight: 600; border: 1px solid #ddd; color: #333333;">🧾 Sales Tax (TX 8.25%)</td>
-                              <td style="padding: 12px; border: 1px solid #ddd; color: #333333;">$${salesTax.toFixed(2)}</td>
-                            </tr>
                             <tr>
                               <td style="padding: 12px; background-color: #9B2226; font-weight: 700; border: 2px solid #FFC300; color: #F4F1DE; font-size: 16px;">💵 TOTAL ESTIMATE</td>
                               <td style="padding: 12px; border: 2px solid #FFC300; background-color: #FFF9E6; font-weight: 700; font-size: 20px; color: #9B2226;">$${totalEstimatedPrice.toFixed(2)}</td>
@@ -541,7 +533,7 @@ export default async function handler(request, response) {
                             </h1>
                           </div>
                           <p style="color: #FFC300; margin: 10px 0 0 0; font-size: 16px; font-weight: 600; letter-spacing: 2px;">
-                            ⚡ BUILT FOR THE TOUGH JOBS! ⚡
+                            TOUGH BY DEFAULT
                           </p>
                         </td>
                       </tr>

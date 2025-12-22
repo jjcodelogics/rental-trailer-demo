@@ -28,11 +28,10 @@ function waitForFlatpickr() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    initMobileMenu();
+    // initMobileMenu(); // Already initialized in main.js
     initBackToTop();
     initDeliveryOption();
     handleInquiryForm();
-    
     // Wait for flatpickr to load before initializing
     await waitForFlatpickr();
     initDatePicker();

@@ -9,7 +9,8 @@ export function initTrailerCalculator() {
     e.preventDefault();
     // Get form values
     const days = parseInt(form.days.value, 10);
-    const delivery = form.delivery.value === 'delivery';
+    const needDropOff = form.dropoff.value === 'company';
+    const needPickup = form.pickup.value === 'company';
     const dump = form.dump.value === 'yes';
     const zipcode = form.zipcode.value.trim();
 
@@ -20,11 +21,12 @@ export function initTrailerCalculator() {
     else if (days >= 2) dailyRate = 95;
 
     let rentalCost = days * dailyRate;
-    let deliveryCost = 0;
+    let dropOffCost = 0;
+    let pickupCost = 0;
     let dumpFee = dump ? 250 : 0;
-    let deliveryMsg = '';
+    let distance = 0;
 
-    if (delivery) {
+    if (needDropOff || needPickup) {
       if (!zipcode) {
         result.innerHTML = '<span class="text-red-600">Please enter your zip code for delivery estimate.</span>';
         return;
@@ -51,13 +53,15 @@ export function initTrailerCalculator() {
                   Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                   Math.sin(dLon/2) * Math.sin(dLon/2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        const distance = R * c;
+        distance = R * c;
         if (distance <= 20) {
-          deliveryCost = 150;
-          deliveryMsg = `Delivery distance: ${distance.toFixed(1)} mi (0-20 mi flat rate)`;
+          // Flat rate within 20 miles
+          dropOffCost = needDropOff ? 75 : 0;
+          pickupCost = needPickup ? 75 : 0;
         } else {
-          deliveryCost = distance * 2 * 3.5;
-          deliveryMsg = `Delivery distance: ${distance.toFixed(1)} mi (20+ mi roundtrip)`;
+          // Beyond 20 miles: $3.5 per mile for each service
+          dropOffCost = needDropOff ? distance * 3.5 : 0;
+          pickupCost = needPickup ? distance * 3.5 : 0;
         }
       } catch (err) {
         result.innerHTML = '<span class="text-red-600">Could not estimate delivery distance. Please check your zip code.</span>';
@@ -65,13 +69,15 @@ export function initTrailerCalculator() {
       }
     }
 
+    const deliveryCost = dropOffCost + pickupCost;
     const total = rentalCost + deliveryCost + dumpFee;
     result.innerHTML = `
       <div class="bg-faded-cream p-4 rounded-lg mt-4">
         <div class="font-bold text-lg mb-2">Estimated Total: <span class="text-rustic-red">$${total.toFixed(2)}</span></div>
         <ul class="text-charcoal/90 text-sm mb-2">
           <li>Rental: $${rentalCost.toFixed(2)} (${days} day${days > 1 ? 's' : ''} @ $${dailyRate}/day)</li>
-          ${delivery ? `<li>Delivery: $${deliveryCost.toFixed(2)} (${deliveryMsg})</li>` : '<li>Pickup: $0 (self pickup)</li>'}
+          <li>Drop Off: $${dropOffCost.toFixed(2)} ${needDropOff ? `(${distance.toFixed(1)} mi @ $3.5/mi)` : '(self pickup)'}</li>
+          <li>Pickup: $${pickupCost.toFixed(2)} ${needPickup ? `(${distance.toFixed(1)} mi @ $3.5/mi)` : '(self return)'}</li>
           <li>Dump Fee: $${dumpFee.toFixed(2)} (${dump ? 'We dump for you' : 'You dump yourself'})</li>
         </ul>
         <div class="text-xs text-charcoal/60">* This is an estimate. Final price may vary based on actual address and availability.</div>

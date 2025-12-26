@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const openBtn = document.getElementById('open-calculator');
   const modal = document.getElementById('trailer-calculator-modal');
   const closeBtn = document.getElementById('close-calculator');
-  const deliverySelect = document.getElementById('delivery');
+  const dropoffSelect = document.getElementById('dropoff');
+  const pickupSelect = document.getElementById('pickup');
   const zipcodeGroup = document.getElementById('zipcode-group');
 
   if (openBtn && modal && closeBtn) {
@@ -43,14 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-  if (deliverySelect && zipcodeGroup) {
-    deliverySelect.addEventListener('change', (e) => {
-      if (deliverySelect.value === 'delivery') {
-        zipcodeGroup.classList.remove('hidden');
-      } else {
-        zipcodeGroup.classList.add('hidden');
-      }
-    });
+  
+  // Show zipcode field if either drop off or pickup requires company service
+  const toggleZipcodeField = () => {
+    if ((dropoffSelect && dropoffSelect.value === 'company') || 
+        (pickupSelect && pickupSelect.value === 'company')) {
+      zipcodeGroup.classList.remove('hidden');
+    } else {
+      zipcodeGroup.classList.add('hidden');
+    }
+  };
+  
+  if (dropoffSelect && pickupSelect && zipcodeGroup) {
+    dropoffSelect.addEventListener('change', toggleZipcodeField);
+    pickupSelect.addEventListener('change', toggleZipcodeField);
   }
   initTrailerCalculator();
 });

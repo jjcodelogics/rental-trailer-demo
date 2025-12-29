@@ -72,6 +72,12 @@ export function handleInquiryForm() {
                 body: JSON.stringify(data),
             });
 
+            // Check if response is JSON
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                throw new Error('Server configuration error. Please contact support at +1 682-233-4986');
+            }
+
             const result = await response.json();
 
             if (!response.ok) {

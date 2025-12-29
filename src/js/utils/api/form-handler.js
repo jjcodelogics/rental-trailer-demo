@@ -7,12 +7,7 @@ export function handleInquiryForm() {
     const successMessage = document.getElementById('successMessage');
     const submitButton = form?.querySelector('button[type="submit"]');
 
-    if (!form) {
-        console.error('Form not found: #inquiryForm');
-        return;
-    }
-    
-    console.log('Form handler initialized successfully');
+    if (!form) return;
 
     const pickupDateInput = document.getElementById('pickupDate');
     const deliveryDateInput = document.getElementById('deliveryDate');
@@ -31,7 +26,6 @@ export function handleInquiryForm() {
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        console.log('Form submitted');
 
         form.querySelectorAll('.form-error').forEach((el) => (el.textContent = ''));
 
@@ -66,7 +60,6 @@ export function handleInquiryForm() {
 
             const validation = trailerInquirySchema.safeParse(data);
             if (!validation.success) {
-                console.log('Validation failed:', validation.error.errors);
                 validation.error.errors.forEach((err) => {
                     const fieldName = err.path[0];
                     const errorField = document.getElementById(`${fieldName}Error`);
@@ -81,8 +74,6 @@ export function handleInquiryForm() {
                 }
                 return;
             }
-            
-            console.log('Validation passed, submitting to API');
 
             const response = await fetch('/api/submit-trailer-inquiry', {
                 method: 'POST',

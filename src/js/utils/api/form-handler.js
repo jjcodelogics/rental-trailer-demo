@@ -47,6 +47,11 @@ export function handleInquiryForm() {
                         errorField.textContent = err.message;
                     }
                 });
+                
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Request these dates';
+                }
                 return;
             }
 
@@ -88,7 +93,7 @@ export function handleInquiryForm() {
         } finally {
             if (submitButton) {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Submit Inquiry';
+                submitButton.textContent = 'Request these dates';
             }
         }
     });

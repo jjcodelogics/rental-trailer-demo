@@ -52,35 +52,31 @@ export const trailerInquirySchema = z.object({
   }),
 
   deliveryStreet: z.string()
-    .min(5, 'Street address must be at least 5 characters')
-    .max(150, 'Street address must be less than 150 characters')
-    .transform(sanitizeString)
     .optional()
+    .transform(s => s ? sanitizeString(s) : undefined)
     .refine(
       (val, ctx) => {
         const parent = ctx?.parent;
         if (parent?.deliveryOption === 'deliverPickup') {
-          return val && val.length >= 5;
+          return val && val.length >= 5 && val.length <= 150;
         }
         return true;
       },
-      { message: 'Street address is required when delivery is selected' }
+      { message: 'Street address is required when delivery is selected (5-150 characters)' }
     ),
 
   deliveryCity: z.string()
-    .min(2, 'City must be at least 2 characters')
-    .max(100, 'City must be less than 100 characters')
-    .transform(sanitizeString)
     .optional()
+    .transform(s => s ? sanitizeString(s) : undefined)
     .refine(
       (val, ctx) => {
         const parent = ctx?.parent;
         if (parent?.deliveryOption === 'deliverPickup') {
-          return val && val.length >= 2;
+          return val && val.length >= 2 && val.length <= 100;
         }
         return true;
       },
-      { message: 'City is required when delivery is selected' }
+      { message: 'City is required when delivery is selected (2-100 characters)' }
     ),
 
   deliveryState: z.string()
@@ -88,7 +84,6 @@ export const trailerInquirySchema = z.object({
     .default('TX'),
 
   deliveryZipcode: z.string()
-    .regex(/^\d{5}$/, 'Zipcode must be 5 digits')
     .optional()
     .refine(
       (val, ctx) => {
@@ -98,7 +93,7 @@ export const trailerInquirySchema = z.object({
         }
         return true;
       },
-      { message: 'Valid 5-digit zipcode is required when delivery is selected' }
+      { message: 'Zipcode must be 5 digits when delivery is selected' }
     ),
 
   'trailer-use-reason': z.string().optional().transform(s => (s ? sanitizeString(s) : undefined)),

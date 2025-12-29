@@ -19,6 +19,10 @@ function waitForFlatpickr() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('DOMContentLoaded fired');
+    console.log('Form element:', document.getElementById('inquiryForm'));
+    console.log('Submit button:', document.querySelector('#inquiryForm button[type="submit"]'));
+    
     initBackToTop();
     initDeliveryOption();
     handleInquiryForm();

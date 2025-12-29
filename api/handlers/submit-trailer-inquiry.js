@@ -25,7 +25,7 @@
  * @returns {number} 500 - Server error
  */
 
-import { trailerInquirySchema } from '../src/js/trailer-schema.js';
+import { trailerInquirySchema } from '../../src/js/utils/validation/trailer-schema.js';
 
 // Business address - simplified format for better geocoding accuracy
 const BUSINESS_ADDRESS = '8637 Shadow Trace Dr, Fort Worth, TX 76244';

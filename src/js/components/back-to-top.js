@@ -1,20 +1,3 @@
-/**
- * Back to Top Button Component
- * Manages the visibility and behavior of the scroll-to-top button
- * 
- * @module components/back-to-top
- */
-
-/**
- * Initializes the back-to-top button functionality
- * Shows/hides button based on scroll position (threshold: 300px)
- * 
- * @function initBackToTop
- * @returns {void}
- * @example
- * // Initialize on page load
- * initBackToTop();
- */
 export function initBackToTop() {
   const backToTopBtn = document.getElementById('back-to-top');
   

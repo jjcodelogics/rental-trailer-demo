@@ -1,22 +1,3 @@
-/**
- * Mobile Menu Component
- * Handles responsive navigation menu toggle and interaction
- * 
- * @module components/mobile-menu
- */
-
-/**
- * Initializes the mobile navigation menu functionality
- * - Toggles menu visibility on button click
- * - Automatically closes menu when a navigation link is clicked
- * - Closes menu when clicking outside the menu area
- * 
- * @function initMobileMenu
- * @returns {void}
- * @example
- * // Initialize mobile menu on page load
- * initMobileMenu();
- */
 export function initMobileMenu() {
   const mobileMenuBtn = document.getElementById('mobile-menu');
   const mobileNav = document.getElementById('mobile-nav');

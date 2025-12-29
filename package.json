@@ -3,38 +3,14 @@
   "version": "1.0.0",
   "description": "Modern, responsive trailer rental website with serverless API integration, advanced form validation, and performance optimization",
   "type": "module",
-  "homepage": "https://github.com/yourusername/rental-trailer-demo#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yourusername/rental-trailer-demo.git"
-  },
-  "bugs": {
-    "url": "https://github.com/yourusername/rental-trailer-demo/issues"
-  },
   "scripts": {
     "dev": "vite",
     "build": "npm run generate:sitemap && vite build",
     "preview": "vite preview",
     "generate:sitemap": "node scripts/generate-sitemap.js",
-    "convert:webp": "node scripts/convert-to-webp.js",
-    "lint": "echo 'ESLint not configured yet'",
-    "format": "echo 'Prettier not configured yet'",
-    "clean": "rm -rf dist"
+    "convert:webp": "node scripts/convert-to-webp.js"
   },
-  "keywords": [
-    "rental",
-    "trailer",
-    "static-site",
-    "vite",
-    "tailwindcss",
-    "serverless",
-    "portfolio-project",
-    "responsive-design",
-    "zod-validation",
-    "vercel",
-    "small-business"
-  ],
-  "author": "Your Name <your.email@example.com>",
+  "author": "Texas Tough Rentals",
   "license": "ISC",
   "engines": {
     "node": ">=16.0.0",

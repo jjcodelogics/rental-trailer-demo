@@ -126,7 +126,7 @@ npm run clean            # Remove dist/
 
 ### Update Business Info
 
-Edit `config/constants.js`:
+Edit `src/js/config/constants.js`:
 ```javascript
 export const BUSINESS_CONFIG = {
   name: 'Your Business',

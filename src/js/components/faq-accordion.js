@@ -1,15 +1,3 @@
-/**
- * FAQ Accordion Component
- * Handles the toggle functionality for FAQ questions
- * 
- * @module components/faq-accordion
- * @author Texas Tough Rentals
- */
-
-/**
- * Initialize FAQ accordion functionality
- * Adds click handlers to all FAQ items to toggle their visibility
- */
 export function initFaqAccordion() {
   const faqItems = document.querySelectorAll('.faq-item');
   

@@ -13,12 +13,21 @@ rental-trailer-demo/
 ├── .gitignore                    # Git ignore rules
 ├── .prettierrc                   # Code formatting
 ├── CONTRIBUTING.md               # Contribution guide
+├── LICENSE                       # License file
 ├── package.json                  # Dependencies
 ├── postcss.config.js             # PostCSS config
 ├── README.md                     # Main docs
+├── QUALITY-CHECKLIST.md          # Quality checklist
 ├── tailwind.config.js            # Tailwind config
 ├── vercel.json                   # Vercel deployment
 ├── vite.config.js                # Vite build config
+│
+├── *.html                        # HTML pages (root level)
+│   ├── index.html                # Homepage
+│   ├── trailer.html              # Trailer details
+│   ├── about-me.html             # About page
+│   ├── contact.html              # Contact page
+│   └── confirm-booking.html      # Booking confirmation
 │
 ├── api/                          # Serverless API
 │   ├── handlers/                 # Endpoint handlers
@@ -26,18 +35,16 @@ rental-trailer-demo/
 │   │   └── submit-trailer-inquiry.js
 │   └── utils/                    # API utilities
 │
-├── config/                       # Configuration
-│   ├── constants.js              # Business constants
-│   └── env/                      # Environment configs
-│
 ├── docs/                         # Documentation
 │   ├── API.md                    # API reference
 │   ├── DEPLOYMENT.md             # Deployment guide
+│   ├── IMAGE-OPTIMIZATION.md     # Image optimization guide
 │   ├── PERFORMANCE.md            # Performance guide
+│   ├── PERFORMANCE-IMPROVEMENTS.md
+│   ├── PORTFOLIO-SUMMARY.md      # Portfolio summary
 │   ├── PROJECT-STRUCTURE.md      # This file
 │   ├── QUICK-START.md            # Quick start guide
-│   ├── SECURITY-AUDIT.md         # Security status
-│   └── README.md                 # Documentation index
+│   └── SECURITY-AUDIT.md         # Security status
 │
 ├── public/                       # Static assets
 │   ├── robots.txt
@@ -49,38 +56,37 @@ rental-trailer-demo/
 │
 └── src/                          # Source code
     ├── assets/                   # Static assets
-    │   ├── documents/            # PDFs
     │   └── images/               # Organized images
     │       ├── branding/         # Logos
     │       ├── favicons/         # Icons
     │       └── trailers/         # Trailer photos
     │
     ├── css/                      # Stylesheets
-    │   └── style.css
+    │   ├── flatpickr.min.css    # Date picker styles
+    │   └── style.css            # Main styles
     │
-    ├── js/                       # JavaScript
-    │   ├── components/           # UI components
-    │   │   ├── back-to-top.js
-    │   │   ├── date-picker.js
-    │   │   ├── delivery-option.js
-    │   │   └── mobile-menu.js
-    │   ├── config/               # JS config
-    │   │   └── config.js
-    │   ├── main.js               # Entry point
-    │   ├── structured-data.js    # SEO data
-    │   └── utils/                # Utilities
-    │       ├── api/              # API utils
-    │       │   └── form-handler.js
-    │       └── validation/       # Form validation
-    │           ├── schemas.js
-    │           └── trailer-schema.js
-    │
-    └── pages/                    # HTML pages
-        ├── about-me.html
-        ├── confirm-booking.html
-        ├── contact.html
-        ├── index.html
-        └── trailer.html
+    └── js/                       # JavaScript
+        ├── components/           # UI components
+        │   ├── back-to-top.js
+        │   ├── date-picker.js
+        │   ├── delivery-option.js
+        │   ├── faq-accordion.js
+        │   ├── mobile-menu.js
+        │   └── trailer-calculator.js
+        ├── config/               # JS config
+        │   ├── config.js
+        │   └── constants.js      # Business constants
+        ├── utils/                # Utilities
+        │   ├── api/              # API utils
+        │   │   └── form-handler.js
+        │   └── validation/       # Form validation
+        │       ├── schemas.js
+        │       └── trailer-schema.js
+        ├── confirm-booking.js    # Booking confirmation handler
+        ├── main.js               # Main entry point
+        ├── speed-insights.js     # Vercel Speed Insights
+        ├── structured-data.js    # SEO structured data
+        └── trailer-init.js       # Trailer page init
 ```
 
 ---
@@ -90,13 +96,15 @@ rental-trailer-demo/
 ### `src/`
 Source code and assets.
 
-- **pages/** - HTML pages
-- **js/** - JavaScript modules (components, utils)
+- **js/** - JavaScript modules (components, utils, config)
 - **css/** - Stylesheets
-- **assets/** - Images and documents
+- **assets/** - Images and static files
 
 ### `api/`
 Serverless API functions.
+
+### `docs/`
+All project documentation files.
 
 - **handlers/** - API endpoint implementations
 - **utils/** - Shared API utilities

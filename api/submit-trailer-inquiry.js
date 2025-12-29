@@ -483,6 +483,11 @@ export default async function handler(request, response) {
         `,
       };
 
+      console.log('Attempting to send owner email...');
+      console.log('BREVO_API_KEY exists:', !!process.env.BREVO_API_KEY);
+      console.log('EMAIL_SENDER:', process.env.EMAIL_SENDER);
+      console.log('EMAIL_RECIPIENT:', process.env.EMAIL_RECIPIENT);
+      
       const ownerEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: {
@@ -492,11 +497,15 @@ export default async function handler(request, response) {
         body: JSON.stringify(ownerEmailPayload),
       });
 
+      console.log('Owner email response status:', ownerEmailResponse.status);
+      
       if (!ownerEmailResponse.ok) {
         const errorBody = await ownerEmailResponse.json();
-        console.error('Brevo API Error (Owner Email):', errorBody);
-        throw new Error('Failed to send email to owner.');
+        console.error('Brevo API Error (Owner Email):', JSON.stringify(errorBody, null, 2));
+        throw new Error(`Failed to send email to owner: ${JSON.stringify(errorBody)}`);
       }
+      
+      console.log('Owner email sent successfully!');
 
       // Send confirmation email to customer
       const customerEmailPayload = {
@@ -670,6 +679,8 @@ export default async function handler(request, response) {
         `,
       };
 
+      console.log('Attempting to send customer email...');
+      
       const customerEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: {
@@ -679,11 +690,21 @@ export default async function handler(request, response) {
         body: JSON.stringify(customerEmailPayload),
       });
 
+      console.log('Customer email response status:', customerEmailResponse.status);
+      
       if (!customerEmailResponse.ok) {
         const errorBody = await customerEmailResponse.json();
-        console.error('Brevo API Error (Customer Email):', errorBody);
-        // Don't throw error here - still consider submission successful
-      }
+        console.error('Brevo API Error (Customer Email):', JSON.stringify(errorBody, null, 2));
+        throw new Error(`Failed to send customer email.message);
+      console.error('Full error:', emailError);
+      // Return error to user instead of hiding it
+      return response.status(500).json({ 
+        success: false, 
+        message: 'There was an error sending the confirmation email. Please contact us directly at +1 682-233-4986.',
+        error: emailError.message 
+     
+      
+      console.log('Customer email sent successfully!');
 
     } catch (emailError) {
       console.error('Error sending email:', emailError);

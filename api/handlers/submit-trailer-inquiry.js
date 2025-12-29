@@ -6,7 +6,7 @@
  * @requires ../src/js/trailer-schema - Zod validation schema
  * @requires process.env.BREVO_API_KEY - Brevo email service API key
  * @requires process.env.EMAIL_SENDER - Verified sender email address
- * @requires process.env.EMAIL_OWNER - Business owner's email address
+ * @requires process.env.EMAIL_RECIPIENT - Business owner's email address
  * 
  * @endpoint POST /api/submit-trailer-inquiry
  * 

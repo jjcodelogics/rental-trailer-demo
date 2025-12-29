@@ -43,6 +43,26 @@ export function handleInquiryForm() {
         try {
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
+            
+            // Check if terms and conditions checkbox is checked
+            const agreeTermsCheckbox = document.getElementById('agreeTerms');
+            const agreeTermsError = document.getElementById('agreeTermsError');
+            
+            if (!agreeTermsCheckbox.checked) {
+                if (agreeTermsError) {
+                    agreeTermsError.textContent = 'You must agree to the Terms & Conditions to continue';
+                }
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Request these dates';
+                }
+                return;
+            }
+            
+            // Clear the error if checkbox is checked
+            if (agreeTermsError) {
+                agreeTermsError.textContent = '';
+            }
 
             const validation = trailerInquirySchema.safeParse(data);
             if (!validation.success) {

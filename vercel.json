@@ -5,14 +5,6 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/api/submit-trailer-inquiry",
-      "destination": "/api/handlers/submit-trailer-inquiry.js"
-    },
-    {
-      "source": "/api/confirm-booking",
-      "destination": "/api/handlers/confirm-booking.js"
-    },
-    {
       "source": "/sitemap.xml",
       "destination": "/sitemap.xml"
     },

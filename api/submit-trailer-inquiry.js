@@ -695,20 +695,20 @@ export default async function handler(request, response) {
       if (!customerEmailResponse.ok) {
         const errorBody = await customerEmailResponse.json();
         console.error('Brevo API Error (Customer Email):', JSON.stringify(errorBody, null, 2));
-        throw new Error(`Failed to send customer email.message);
+        throw new Error(`Failed to send customer email: ${JSON.stringify(errorBody)}`);
+      }
+      
+      console.log('Customer email sent successfully!');
+
+    } catch (emailError) {
+      console.error('Error sending email:', emailError.message);
       console.error('Full error:', emailError);
       // Return error to user instead of hiding it
       return response.status(500).json({ 
         success: false, 
         message: 'There was an error sending the confirmation email. Please contact us directly at +1 682-233-4986.',
         error: emailError.message 
-     
-      
-      console.log('Customer email sent successfully!');
-
-    } catch (emailError) {
-      console.error('Error sending email:', emailError);
-      return response.status(200).json({ success: true, message: 'Inquiry submitted, but there was an issue with email notification.' });
+      });
     }
 
     return response.status(200).json({ success: true, message: 'Trailer inquiry submitted successfully. Check your email for confirmation.' });

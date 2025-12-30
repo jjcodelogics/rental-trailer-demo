@@ -307,6 +307,15 @@ export default async function handler(request, response) {
     // Calculate total estimated price (no tax)
     const totalEstimatedPrice = pricingInfo.trailerCost + deliveryCost;
 
+    // Prepare quote details for response
+    const quoteDetails = {
+      rentalDays: pricingInfo.days,
+      trailerCost: pricingInfo.trailerCost,
+      deliveryCost: deliveryCost,
+      totalEstimated: totalEstimatedPrice,
+      distance: distanceInfo ? distanceInfo.distanceMiles : null
+    };
+
     // Send email to owner
     try {
       const ownerEmailPayload = {

@@ -692,10 +692,18 @@ export default async function handler(request, response) {
       return response.status(500).json({ 
         success: false, 
         message: 'There was an error sending the confirmation email. Please contact us directly at +1 682-233-4986.',
-        error: emailError.message );
-      return response.status(500).json({ 
-        success: false, 
-        message: 'There was an error sending the confirmation email. Please contact us directly at +1 682-233-4986.'
+        error: emailError.message
+      });
+    }
+
+    // Return success response
+    return response.status(200).json({
+      success: true,
+      message: 'Your rental inquiry has been submitted successfully!',
+      quoteDetails
+    });
+
+  } catch (error) {
     console.error('Error processing trailer inquiry:', error);
     return response.status(500).json({ success: false, message: 'An unexpected error occurred.' });
   }

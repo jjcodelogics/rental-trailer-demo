@@ -30,7 +30,8 @@ export default defineConfig({
         trailer: path.resolve(__dirname, 'trailer.html'),
         about: path.resolve(__dirname, 'about-me.html'),
         contact: path.resolve(__dirname, 'contact.html'),
-        confirmBooking: path.resolve(__dirname, 'confirm-booking.html')
+        confirmBooking: path.resolve(__dirname, 'confirm-booking.html'),
+        terms: path.resolve(__dirname, 'terms-and-conditions.html')
       },
       output: {
         assetFileNames: 'assets/[name]-[hash][extname]',

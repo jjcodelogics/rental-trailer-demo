@@ -83,12 +83,14 @@
 
     <header>
         <div class="nav-bar fixed top-0 w-full bg-charcoal shadow-lg z-50 border-b-[3px] border-rustic-red flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
-            <a href="/" class="nav-logo">
-                <picture>
-                    <source srcset="src/assets/images/branding/logo.webp" type="image/webp">
-                    <img src="src/assets/images/branding/logo.jpg" alt="Texas Tough Rentals logo" class="h-16 hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
-                </picture>
-            </a>
+            <div class="flex items-center gap-4">
+                <a href="/" class="nav-logo">
+                    <picture>
+                        <source srcset="src/assets/images/branding/logo.webp" type="image/webp">
+                        <img src="src/assets/images/branding/logo.jpg" alt="Texas Tough Rentals logo" class="h-16 hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                    </picture>
+                </a>
+            </div>
             <nav id="nav-menu" class="hidden lg:flex flex-1 justify-end items-center gap-8">
                 <ul class="flex space-x-8 text-faded-cream font-body font-semibold uppercase text-sm items-center">
                     <li><a href="index.html" class="hover:text-construction-yellow transition-colors">Home</a></li>
@@ -428,6 +430,10 @@
     </div>
 </section>
 
+<div class="flex justify-center mb-8">
+                <img src="src/assets/images/tagline.png" alt="Tough By Default" class="h-36">
+            </div>
+
         <section id="information" class="bg-faded-cream py-12">
             <div class="container mx-auto flex flex-col sm:flex-row justify-center items-center text-center sm:text-left space-y-4 sm:space-y-0 sm:space-x-8 text-charcoal">
                 <p class="flex items-center"><span class="material-symbols-outlined info-icon">location_on</span>Keller, TX</p>
@@ -436,6 +442,7 @@
             </div>
         </section>
     </main>
+    
 
     <footer class="bg-charcoal border-t-[3px] border-rustic-red py-8">
         <div class="container mx-auto text-center text-faded-cream">

@@ -50,14 +50,18 @@
 </head>
 <body id="top" class="bg-faded-cream">
     <header>
-        <div class="nav-bar fixed top-0 w-full bg-charcoal shadow-lg z-50 border-b-[3px] border-rustic-red flex justify-between items-center px-4 sm:px-6 lg:px-8 py-4">
-            <a href="/" class="nav-logo">
-                <picture>
-                    <source srcset="src/assets/images/branding/logo.webp" type="image/webp">
-                    <img src="src/assets/images/branding/logo.jpg" alt="Texas Tough Rentals logo" class="h-16 hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
-                </picture>
-            </a>
-            <nav id="nav-menu" class="hidden lg:flex flex-1 justify-end items-center gap-8">
+        <div class="nav-bar fixed top-0 w-full bg-charcoal shadow-lg z-50 border-b-[3px] border-rustic-red px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <a href="/" class="nav-logo">
+                    <picture>
+                        <source srcset="src/assets/images/branding/logo.webp" type="image/webp">
+                        <img src="src/assets/images/branding/logo.jpg" alt="Texas Tough Rentals logo" class="h-16 hover:scale-105 transition-transform duration-300 rounded-lg shadow-md">
+                    </picture>
+                </a>
+                <div class="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 bg-faded-cream px-6 py-2 rounded-md">
+                    <img src="src/assets/images/tagline.png" alt="Tough By Default" class="h-10">
+                </div>
+                <nav id="nav-menu" class="hidden lg:flex items-center gap-8">
                 <ul class="flex space-x-8 text-faded-cream font-body font-semibold uppercase text-sm items-center">
                     <li><a href="index.html" class="hover:text-construction-yellow transition-colors">Home</a></li>
                     <li><a href="trailer.html" class="hover:text-construction-yellow transition-colors">Trailer</a></li>
@@ -108,6 +112,7 @@
             </div>
         </section>
 
+
         <section id="our-values" class="py-20 bg-faded-cream">
             <div class="container mx-auto">
                 <h2 class="section-title">Our Values</h2>
@@ -131,6 +136,9 @@
                 </div>
             </div>
         </section>
+        <div class="flex justify-center mb-8">
+                <img src="src/assets/images/tagline.png" alt="Tough By Default" class="h-36">
+            </div>
 
         <section id="why-choose-us" class="py-20 bg-white">
             <div class="container mx-auto">
@@ -172,7 +180,7 @@
                 <div class="flex justify-center mt-12">
                     <div class="text-center max-w-2xl">
                         <div class="w-64 h-64 mx-auto mb-6 rounded-lg overflow-hidden shadow-lg">
-                            <img src="https://via.placeholder.com/400x400/333333/F5F5DC?text=Josh" alt="Josh - Founder & Owner" class="w-full h-full object-cover">
+                            <img src="src/assets/images/owner.jpg" alt="Josh - Founder & Owner" class="w-full h-full object-cover">
                         </div>
                         <h3 class="font-heading text-3xl text-charcoal mb-2 font-bold">Josh</h3>
                         <p class="text-rustic-red font-semibold mb-4 text-xl">Founder & Owner</p>
